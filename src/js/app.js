@@ -546,7 +546,7 @@ function initChat() {
     ],
     [
       /golf|course|score/i,
-      "He plays at Monroe Golf and Country Club, usually with his four-year-old son. Last round: a 92.",
+      "He plays at Monroe Golf and Country Club, usually with his son. Last round: a 92.",
     ],
     [
       /cocktail|campari|drink|negroni|old fashioned/i,
