@@ -91,16 +91,7 @@ export const toolsData = [
   "Lighthouse",
 ];
 
-// AI (AI.astro): the rules-file excerpt and the three tools.
-export const aiRulesData = [
-  "Build from the design system. Use the tokens, never a hard-coded color.",
-  "Mobile first. Every page works on a phone from the first line.",
-  "Accessible by default: real headings, alt text, focus states.",
-  "Copy is first person, with contractions.",
-  "No em dashes. Anywhere.",
-  "Nothing ships until I&rsquo;ve read it.",
-];
-
+// AI (AI.astro): the three tools.
 export const aiProjectsData = [
   {
     name: "The Cookbook",

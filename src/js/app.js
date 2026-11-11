@@ -526,7 +526,7 @@ function initChat() {
     ],
     [
       /\bai\b|claude|cartiq|homeplate|cookbook|side project|app/i,
-      "As a fast assistant that follows his rules. He builds the design system first, gives the agent his written coding standards, and reviews every line. He’s also built tools with it, like a code library for his team and a grocery budget app for his family.",
+      "To move faster, not to make the decisions. He does the heavy lifting up front with a design system and written coding standards, then lets the agent run and checks in to steer. He’s also built tools with it, like a code library for his team and a grocery budget app for his family.",
     ],
     [
       /lead|led|team|mentor|manag/i,
