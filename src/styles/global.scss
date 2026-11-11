@@ -602,3 +602,10 @@ textarea {
   pointer-events: none !important;
   visibility: hidden !important;
 }
+
+/* Netlify's "Powered by Netlify" badge (only on the .netlify.app address).
+   Its position is inline, so this nudges it to the bottom left, clear of the chat button. */
+#nl-badge-frame {
+  right: auto !important;
+  left: 0 !important;
+}
