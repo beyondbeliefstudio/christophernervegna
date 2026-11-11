@@ -1,0 +1,23 @@
+---
+// PROPS
+export interface AnalyticsProps {
+  measurementId?: string;
+}
+
+const { measurementId } = Astro.props;
+const isDev = import.meta.env.DEV;
+---
+
+{!isDev && measurementId && (
+  <>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`} />
+    <script is:inline define:vars={{ measurementId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", measurementId);
+    </script>
+  </>
+)}

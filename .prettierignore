@@ -1,0 +1,6 @@
+dist/
+node_modules/
+.astro/
+*.pdf
+_archive/
+Claude outputs/

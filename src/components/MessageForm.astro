@@ -1,0 +1,32 @@
+---
+// "Send me a message": the contact form as its own light section, after Off the
+// clock and before the dark contact band.
+// COMPONENTS
+import ContactForm from "@/components/ContactForm.astro";
+import SecHead from "@/components/SecHead.astro";
+---
+
+<section id="message" aria-labelledby="message-title">
+  <div class="container container-md message">
+    <SecHead
+      id="message-title"
+      bubble="Rather send a note?"
+      title="Tell me what you&rsquo;re hiring for."
+      sub="A role, a project, a question, or a cocktail I should try. It comes straight to my inbox, and I reply to every one myself."
+    />
+    <ContactForm />
+  </div>
+</section>
+
+<style lang="scss">
+  .message {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+    gap: 2.5rem clamp(2.5rem, 6vw, 6rem);
+
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

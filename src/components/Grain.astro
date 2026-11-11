@@ -1,0 +1,54 @@
+---
+// Film grain over the whole page (after Osmo Supply's "Film Grain Effect").
+// The noise tile lives in src/assets/noise.avif, so Vite fingerprints and caches it. Tune the
+// strength with --grain-opacity in global.scss; the flicker stops for visitors
+// who prefer reduced motion.
+// PROPS
+interface Props {
+  animate?: boolean;
+}
+
+const { animate = true } = Astro.props;
+---
+
+<div class="grain" data-grain-animate={animate ? "true" : undefined} aria-hidden="true"></div>
+
+<style lang="scss">
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: url("../assets/noise.avif") 50% 50% / 7.8125em repeat;
+    opacity: var(--grain-opacity);
+    filter: contrast(125%) brightness(60%);
+    pointer-events: none;
+
+    &[data-grain-animate="true"] {
+      animation: grain 0.6s steps(1, end) infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &[data-grain-animate="true"] {
+        animation: none;
+      }
+    }
+  }
+
+  @keyframes grain {
+    0% {
+      background-position: 0em 0em;
+    }
+    20% {
+      background-position: -0.5em 0.3em;
+    }
+    40% {
+      background-position: 0.4em -0.2em;
+    }
+    60% {
+      background-position: -0.3em -0.4em;
+    }
+    80% {
+      background-position: 0.2em 0.5em;
+    }
+  }
+</style>

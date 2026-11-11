@@ -1,0 +1,61 @@
+---
+// Netlify form with a honeypot. Posts to /submit-contact/, the thank-you page.
+// COMPONENTS
+import Buttons from "@/components/Buttons.astro";
+---
+
+<form
+  name="contact"
+  method="POST"
+  action="/submit-contact/"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  class="contact-form"
+>
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="hidden">
+    <label>
+      Don't fill this out if you're human:{" "}
+      <input name="bot-field" tabindex="-1" autocomplete="off" />
+    </label>
+  </p>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="cf-name">
+        Name <span class="required">*</span>
+      </label>
+      <input type="text" id="cf-name" name="name" autocomplete="name" required />
+    </div>
+    <div class="form-group">
+      <label for="cf-email">
+        Email <span class="required">*</span>
+      </label>
+      <input type="email" id="cf-email" name="email" autocomplete="email" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="cf-company">Company and role</label>
+    <input type="text" id="cf-company" name="company" autocomplete="organization" />
+  </div>
+
+  <div class="form-group">
+    <label for="cf-message">
+      What&rsquo;s on your mind? <span class="required">*</span>
+    </label>
+    <textarea id="cf-message" name="message" required></textarea>
+  </div>
+
+  <div class="btn-wrapper">
+    <Buttons variant="primary">Send it</Buttons>
+  </div>
+</form>
+
+<style lang="scss">
+  .contact-form {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: var(--border-radius-large);
+    background: var(--surface-secondary);
+  }
+</style>

@@ -1,0 +1,154 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+import Photo from "@/components/Photo.astro";
+
+// DATA
+import { contactHref } from "@/data/navData";
+
+// IMAGES
+import heroPortrait from "@/assets/photos/chris-hero.jpg";
+---
+
+<header id="top" class="hero" data-progress-nav-anchor>
+  <!-- Interactive dot grid (initHeroDots in app.js). Faint on purpose. -->
+  <div class="hero-dots" data-dots-container-init aria-hidden="true"></div>
+
+  <div class="container container-md hero__grid">
+    <div class="hero__text">
+      <Heading tag="h1" size="display" class="hero__title">
+        I&rsquo;m Chris. I design websites, build them, and{" "}
+        <span class="hero__mark">explain them to anyone in the room.</span>
+      </Heading>
+      <p class="hero__lede">
+        Ten years, well over a hundred websites. I design and develop on any platform, or hand-code
+        from a blank file. I also scope what clients need, walk them through the platform and answer
+        the technical questions on&nbsp;the&nbsp;call.
+      </p>
+      <div class="btn-wrapper btn-wrapper--left hero__actions">
+        <Links variant="dark" href="#work">
+          See the work
+        </Links>
+        <Links variant="light" href={contactHref}>
+          Grab my resume
+        </Links>
+      </div>
+    </div>
+
+    <div class="hero__media">
+      <div class="hero__panel" aria-hidden="true"></div>
+      <Photo
+        class="hero__photo"
+        src={heroPortrait}
+        alt="Illustrated portrait of Chris working on a laptop at a table, wearing a ball cap"
+        label="Photo: a portrait of you"
+        ratio="860 / 1075"
+        eager
+      />
+    </div>
+  </div>
+</header>
+
+<style lang="scss">
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 0 0;
+
+    &__grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: center;
+      gap: 3rem clamp(2rem, 5vw, 5rem);
+    }
+
+    &__title {
+      max-width: 53.75rem;
+    }
+
+    &__mark {
+      color: var(--brand-primary);
+    }
+
+    &__lede {
+      max-width: 40rem;
+      margin-top: 2rem;
+      font-size: var(--_typography---font-size--text-large);
+      line-height: 1.55;
+      color: var(--content-secondary);
+    }
+
+    &__actions {
+      margin-top: 2.25rem;
+    }
+
+    &__media {
+      position: relative;
+      justify-self: end;
+      width: 100%;
+      max-width: 33.75rem;
+      padding: 2.5rem 2rem 2rem;
+    }
+
+    &__panel {
+      position: absolute;
+      inset: 0 0 0 12%;
+      border-radius: var(--border-radius-xl);
+      background: var(--brand-primary);
+    }
+
+    :global(.hero__photo) {
+      position: relative;
+      width: 100%;
+      padding: 0.875rem;
+      transform: rotate(-3deg);
+    }
+
+    @media (max-width: 960px) {
+      padding-top: 4.5rem;
+
+      &__grid {
+        grid-template-columns: 1fr;
+      }
+
+      &__media {
+        justify-self: start;
+        max-width: 26.25rem;
+      }
+    }
+  }
+
+  /* Neutral dots that glow Campari near the cursor (see initHeroDots). */
+  .hero-dots {
+    --dot-base: var(--border-color);
+    --dot-active: var(--brand-primary);
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    gap: 2.4em;
+    padding: 12px;
+    font-size: 7px;
+    opacity: 0.3;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent);
+
+    :global(.hero-dots__dot) {
+      width: 1em;
+      height: 1em;
+      border-radius: 50%;
+      will-change: transform;
+    }
+
+    @media (max-width: 720px) {
+      font-size: 6px;
+    }
+  }
+</style>

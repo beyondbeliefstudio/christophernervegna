@@ -1,0 +1,63 @@
+---
+// "Most teams need three people for this." Three warm neutral cards, each with
+// a sticker-style illustration from src/icons/art-*.svg.
+// COMPONENTS
+import { Icon } from "astro-icon/components";
+import Heading from "@/components/Heading.astro";
+import SecHead from "@/components/SecHead.astro";
+
+// DATA
+import { trioData } from "@/data/homeData";
+---
+
+<section id="three" aria-labelledby="three-title">
+  <div class="container container-md">
+    <SecHead
+      id="three-title"
+      bubble="So what do you actually do?"
+      title="Most teams need three people for this."
+      sub="One to design the site, one to build it, and one to sit with the client and explain what&rsquo;s going on. I&rsquo;ve spent ten years turning into all three."
+    />
+    <div class="trio grid-auto-3">
+      {trioData.map(item => (
+        <div class="card trio__card">
+          <div class="sticker-art trio__art">
+            <Icon name={item.icon} aria-hidden="true" />
+          </div>
+          <Heading tag="h3" size="l">
+            {item.title}
+          </Heading>
+          <p set:html={item.text} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .trio {
+    margin-top: var(--_spacing---section-space--small);
+
+    &__card {
+      display: flex;
+      flex-direction: column;
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+
+      p {
+        margin-top: 1rem;
+        font-size: 1.0625rem;
+        line-height: 1.65;
+      }
+
+      &:hover :global(svg) {
+        transform: rotate(-6deg) scale(1.06);
+      }
+    }
+
+    &__art {
+      width: 7rem;
+      height: 7rem;
+      margin-bottom: 2.25rem;
+    }
+  }
+</style>

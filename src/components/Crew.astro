@@ -1,0 +1,65 @@
+---
+// COMPONENTS
+import Photo from "@/components/Photo.astro";
+import SecHead from "@/components/SecHead.astro";
+
+// DATA
+import { crewData } from "@/data/homeData";
+---
+
+<section aria-labelledby="crew-title">
+  <div class="container container-md">
+    <SecHead
+      id="crew-title"
+      title="Away from the screen."
+      sub="My wife and our two kids come first. After that: golf when I can sneak away, a dog who runs the backyard, and something low and slow on the smoker."
+    />
+    <div class="crew">
+      {crewData.map(p => (
+        <Photo
+          class="crew__photo"
+          src={p.src}
+          alt={p.alt}
+          label={p.alt}
+          caption={p.caption}
+          ratio="4 / 4.6"
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .crew {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: 1.75rem;
+    margin-top: var(--_spacing---section-space--small);
+
+    :global(.crew__photo:nth-child(odd)) {
+      transform: rotate(-2deg);
+    }
+
+    :global(.crew__photo:nth-child(even)) {
+      transform: rotate(2deg);
+    }
+
+    @media (max-width: 960px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+
+      :global(.crew__photo) {
+        padding: 0.5rem 0.5rem 0.75rem;
+      }
+
+      /* Two-line captions on phones: let them sit in the flow instead of overlapping. */
+      :global(.crew__photo figcaption) {
+        position: static;
+        margin-top: 0.625rem;
+        font-size: 0.8125rem;
+        line-height: 1.35;
+      }
+    }
+  }
+</style>

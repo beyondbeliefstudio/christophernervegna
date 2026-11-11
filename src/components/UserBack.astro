@@ -1,0 +1,24 @@
+---
+// Userback feedback widget. Lazy: loads after 3s or the first interaction, and
+// only when PUBLIC_USERBACK_TOKEN is set (so it stays out of local dev by default).
+const token = import.meta.env.PUBLIC_USERBACK_TOKEN ?? "";
+const isDev = import.meta.env.DEV;
+---
+
+{!isDev && token && <script is:inline define:vars={{ token }}>
+  window.Userback = window.Userback || {};
+  Userback.access_token = token;
+  var loaded = false;
+  function loadUserback() {
+    if (loaded) return;
+    loaded = true;
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://static.userback.io/widget/v1.js";
+    (document.head || document.body).appendChild(s);
+  }
+  setTimeout(loadUserback, 3000);
+  ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+    addEventListener(e, loadUserback, { once: true, passive: true });
+  });
+</script>}

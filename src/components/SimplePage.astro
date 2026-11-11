@@ -1,0 +1,59 @@
+---
+// Shared shell for the inner pages (legal, 404, thank-you): a speech bubble, a
+// title, an optional lead, then the page's own content in the slot.
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// PROPS
+interface Props {
+  bubble: string;
+  title: string;
+  lead?: string;
+  updated?: string;
+}
+
+const { bubble, title, lead, updated } = Astro.props;
+---
+
+<section class="simple-page">
+  <div class="container container-sm">
+    <div class="simple-page__head">
+      <span class="bubble bubble--red">{bubble}</span>
+      <Heading tag="h1" size="xxl" class="simple-page__title">
+        {title}
+      </Heading>
+      {lead && <p class="simple-page__lead" set:html={lead} />}
+      {updated && <p class="simple-page__updated">Last updated {updated}</p>}
+    </div>
+    <slot />
+  </div>
+</section>
+
+<style lang="scss">
+  .simple-page {
+    padding: 7.5rem 0 var(--_spacing---section-space--large);
+
+    &__head {
+      max-width: 50rem;
+      margin: 0 auto 3rem;
+    }
+
+    :global(.simple-page__title) {
+      margin-top: 1.625rem;
+    }
+
+    &__lead {
+      margin-top: 1.25rem;
+      color: var(--content-secondary);
+      font-size: 1.25rem;
+      line-height: 1.55;
+    }
+
+    &__updated {
+      margin-top: 1rem;
+      color: var(--content-secondary);
+      font-family: var(--tertiary-family);
+      font-size: 0.8125rem;
+    }
+  }
+</style>

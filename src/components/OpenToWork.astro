@@ -1,0 +1,37 @@
+---
+// "Open to work" band under the hero. The whole band jumps to the contact section.
+// COMPONENTS
+import ScrollingText from "@/components/ScrollingText.astro";
+
+// DATA
+import { contactHref } from "@/data/navData";
+
+const words = Array(8).fill("Open to work");
+---
+
+<div class="open-band">
+  <ScrollingText href={contactHref} label="Open to work. Jump to contact">
+    <span>
+      {words.map(w => (
+        <>
+          {w} <i class="open-band__dot" />
+        </>
+      ))}
+    </span>
+  </ScrollingText>
+</div>
+
+<style lang="scss">
+  .open-band {
+    margin-top: 1.5rem;
+
+    &__dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.6;
+    }
+  }
+</style>

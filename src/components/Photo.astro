@@ -1,0 +1,58 @@
+---
+// A polaroid frame. Pass an imported image (src/assets, optimized by Astro) or
+// a URL string. With no `src` it shows a labeled placeholder.
+// HELPERS
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+// PROPS
+interface Props {
+  src?: ImageMetadata | string;
+  alt?: string;
+  label: string;
+  caption?: string;
+  ratio?: string;
+  class?: string;
+  eager?: boolean;
+}
+
+const {
+  src,
+  alt = "",
+  label,
+  caption,
+  ratio = "4 / 5",
+  class: className,
+  eager = false,
+} = Astro.props;
+const loading = eager ? "eager" : "lazy";
+---
+
+<figure class:list={["polaroid", className]}>
+  {src ? (
+    <div class="polaroid__frame" style={`aspect-ratio: ${ratio};`}>
+      {typeof src === "string" ? (
+        <img src={src} alt={alt} loading={loading} />
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          loading={loading}
+          fetchpriority={eager ? "high" : undefined}
+          widths={[480, 860]}
+          sizes="(max-width: 960px) 90vw, 540px"
+        />
+      )}
+    </div>
+  ) : (
+    <div
+      class="placeholder polaroid__frame"
+      style={`aspect-ratio: ${ratio};`}
+      role="img"
+      aria-label={`Placeholder: ${label}`}
+    >
+      {label}
+    </div>
+  )}
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

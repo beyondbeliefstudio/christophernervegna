@@ -1,0 +1,77 @@
+---
+// One canonical marquee. Content comes in through the slot; app.js
+// (initScrollerAnimations) clones the items so the loop is seamless and
+// leaves it still for visitors who prefer reduced motion.
+// PROPS
+interface Props {
+  href?: string;
+  label?: string;
+  speed?: number; // seconds per loop
+}
+
+const { href, label, speed = 38 } = Astro.props;
+const Tag = href ? "a" : "div";
+---
+
+<Tag
+  class="scrolling-text"
+  href={href}
+  aria-label={label}
+  data-scroller
+  style={`--speed: ${speed}s;`}
+>
+  <div class="scrolling-text__inner" aria-hidden={label ? "true" : undefined}>
+    <slot />
+  </div>
+</Tag>
+
+<style lang="scss">
+  .scrolling-text {
+    --gap: 1.75rem;
+    display: block;
+    overflow: hidden;
+    padding: 1rem 0;
+    background: var(--brand-primary);
+    color: var(--content-on-primary);
+    font-family: var(--primary-family);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--content-on-primary);
+
+      .scrolling-text__inner {
+        animation-play-state: paused;
+      }
+    }
+
+    &__inner {
+      display: flex;
+      gap: var(--gap);
+      width: max-content;
+      animation: scroll-text var(--speed) linear infinite;
+
+      :global(> *) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--gap);
+        white-space: nowrap;
+      }
+    }
+  }
+
+  @keyframes scroll-text {
+    to {
+      transform: translateX(calc(-50% - var(--gap) / 2));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scrolling-text__inner {
+      animation: none;
+    }
+  }
+</style>

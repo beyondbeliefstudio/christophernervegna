@@ -1,0 +1,208 @@
+---
+// HELPERS
+import { type HTMLAttributes } from "astro/types";
+
+const tags = {
+  h1: "h1",
+  h2: "h2",
+  h3: "h3",
+  h4: "h4",
+  h5: "h5",
+  h6: "h6",
+  span: "span",
+  p: "p",
+};
+
+const sizes = {
+  display: "fs-display",
+  xxl: "fs-xxl",
+  xl: "fs-xl",
+  l: "fs-l",
+  m: "fs-m",
+  s: "fs-s",
+  xs: "fs-xs",
+  xxs: "fs-xxs",
+  main: "fs-main",
+};
+
+const fontFamilies = {
+  primary: "ff-primary",
+  secondary: "ff-secondary",
+  tertiary: "ff-tertiary",
+};
+
+const marginBottoms = {
+  xl: "mb-xl",
+  l: "mb-l",
+  m: "mb-m",
+  s: "mb-s",
+  xs: "mb-xs",
+  none: "mb-none",
+};
+
+const weights = {
+  fw400: "fw-400",
+  fw500: "fw-500",
+  fw600: "fw-600",
+  fw700: "fw-700",
+  fw800: "fw-800",
+};
+
+const textTransforms = {
+  uppercase: "text-uppercase",
+  lowercase: "text-lowercase",
+  capitalize: "text-capitalize",
+  none: "text-none",
+};
+
+// PROPS
+interface Props extends HTMLAttributes<"h2"> {
+  tag: keyof typeof tags;
+  size: keyof typeof sizes;
+  fontFamily?: keyof typeof fontFamilies;
+  marginBottom?: keyof typeof marginBottoms;
+  weight?: keyof typeof weights;
+  textTransform?: keyof typeof textTransforms;
+  lineHeight?: string | number;
+}
+
+const {
+  tag,
+  size,
+  fontFamily = "primary",
+  marginBottom = "none",
+  weight = "fw700",
+  textTransform,
+  lineHeight,
+  class: className,
+  ...rest
+} = Astro.props;
+const CustomTag = tag;
+---
+
+<CustomTag
+  class:list={[
+    "heading",
+    sizes[size],
+    fontFamilies[fontFamily],
+    marginBottoms[marginBottom],
+    weights[weight],
+    textTransform ? textTransforms[textTransform] : null,
+    className,
+  ]}
+  style={lineHeight ? `line-height: ${lineHeight}` : undefined}
+  {...rest}
+>
+  <slot />
+</CustomTag>
+
+<style>
+  .heading {
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  /* Sizes */
+  .fs-display {
+    font-size: var(--_typography---font-size--display);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+  }
+  .fs-xxl {
+    font-size: var(--_typography---font-size--h1);
+    line-height: 1.02;
+  }
+  .fs-xl {
+    font-size: var(--_typography---font-size--h2);
+  }
+  .fs-l {
+    font-size: var(--_typography---font-size--h3);
+    line-height: 1;
+  }
+  .fs-m {
+    font-size: var(--_typography---font-size--h4);
+  }
+  .fs-s {
+    font-size: var(--_typography---font-size--h5);
+    line-height: 1.1;
+  }
+  .fs-xs {
+    font-size: var(--_typography---font-size--h6);
+    line-height: 1.1;
+  }
+  .fs-xxs {
+    font-size: var(--_typography---font-size--text-large);
+  }
+  .fs-main {
+    font-size: var(--_typography---font-size--text-main);
+  }
+
+  /* Families */
+  .ff-primary {
+    font-family: var(--primary-family);
+    letter-spacing: -0.03em;
+  }
+  .ff-primary.fs-xxl {
+    letter-spacing: -0.035em;
+  }
+  .ff-primary.fs-display {
+    letter-spacing: -0.04em;
+  }
+  .ff-secondary {
+    font-family: var(--secondary-family);
+  }
+  .ff-tertiary {
+    font-family: var(--tertiary-family);
+  }
+
+  /* Margin bottom */
+  .mb-xl {
+    margin-bottom: 2rem;
+  }
+  .mb-l {
+    margin-bottom: 1.5rem;
+  }
+  .mb-m {
+    margin-bottom: 1rem;
+  }
+  .mb-s {
+    margin-bottom: 0.5rem;
+  }
+  .mb-xs {
+    margin-bottom: 0.25rem;
+  }
+  .mb-none {
+    margin-bottom: 0;
+  }
+
+  /* Weights */
+  .fw-400 {
+    font-weight: 400;
+  }
+  .fw-500 {
+    font-weight: 500;
+  }
+  .fw-600 {
+    font-weight: 600;
+  }
+  .fw-700 {
+    font-weight: 700;
+  }
+  .fw-800 {
+    font-weight: 800;
+  }
+
+  /* Text transform */
+  .text-uppercase {
+    text-transform: uppercase;
+  }
+  .text-lowercase {
+    text-transform: lowercase;
+  }
+  .text-capitalize {
+    text-transform: capitalize;
+  }
+  .text-none {
+    text-transform: none;
+  }
+</style>

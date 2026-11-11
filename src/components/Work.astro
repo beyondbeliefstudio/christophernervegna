@@ -1,0 +1,443 @@
+---
+// Work: filter chips plus the Osmo Supply List/Grid Toggle (Flip), restyled to
+// the brand. Projects come from the `work` content collection (src/data/work.json).
+// Both interactions live in app.js: initListGridToggle and initWorkFilters.
+// COMPONENTS
+import { Icon } from "astro-icon/components";
+import SecHead from "@/components/SecHead.astro";
+
+// HELPERS
+import { getCollection } from "astro:content";
+
+// DATA
+import workOrder from "@/data/work.json";
+
+// The collection loader sorts by id; keep the order the JSON file is written in.
+const order = workOrder.map(item => item.id);
+const work = (await getCollection("work"))
+  .sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id))
+  .map(entry => entry.data);
+const filters = [
+  { id: "all", label: "All work", count: work.length },
+  { id: "BentoBox", label: "BentoBox", count: work.filter(w => w.where === "BentoBox").length },
+  {
+    id: "Beyond Belief",
+    label: "Beyond Belief",
+    count: work.filter(w => w.where === "Beyond Belief").length,
+  },
+];
+---
+
+<section id="work" data-progress-nav-anchor aria-labelledby="work-title">
+  <div class="container container-md">
+    <SecHead
+      id="work-title"
+      bubble="Can I see some?"
+      red
+      title="Sure. Here are a few I&rsquo;m proud of."
+      sub="Out of the hundred-plus sites I&rsquo;ve designed and built, these are the ones I&rsquo;d show you first. Restaurants from BentoBox, local businesses from Beyond Belief."
+    />
+
+    <div class="list-grid" data-list-grid-view="grid" data-list-grid-init>
+      <div class="list-grid__bar">
+        <div class="filters" role="group" aria-label="Filter work">
+          {filters.map((f, i) => (
+            <button
+              type="button"
+              class="filters__btn"
+              data-filter={f.id}
+              aria-pressed={i === 0 ? "true" : "false"}
+            >
+              {f.label} <span>{String(f.count).padStart(2, "0")}</span>
+            </button>
+          ))}
+        </div>
+        <div class="list-grid__toggle" role="group" aria-label="View">
+          <button
+            data-list-grid-toggle="list"
+            type="button"
+            aria-pressed="false"
+            class="list-grid__button"
+          >
+            List
+          </button>
+          <button
+            data-list-grid-toggle="grid"
+            type="button"
+            aria-pressed="true"
+            class="list-grid__button"
+          >
+            Grid
+          </button>
+          <span data-list-grid-flip aria-hidden="true" class="list-grid__indicator"></span>
+        </div>
+      </div>
+
+      <div class="list-grid__list" role="list">
+        {work.map(w => (
+          <div role="listitem" class="list-grid__item" data-where={w.where}>
+            <a
+              href={w.url || undefined}
+              target={w.url ? "_blank" : undefined}
+              rel={w.url ? "noopener" : undefined}
+              class="list-grid__link"
+              title={w.what}
+            >
+              <div data-list-grid-flip class="list-grid__media">
+                {w.image ? (
+                  <img
+                    src={w.image}
+                    loading="lazy"
+                    alt={`${w.name} homepage`}
+                    class="list-grid__image"
+                    width="800"
+                    height="600"
+                  />
+                ) : (
+                  <span class="list-grid__ph">Screenshot coming</span>
+                )}
+              </div>
+              <p data-list-grid-fade class="list-grid__title">
+                {w.name}
+              </p>
+              <p data-list-grid-fade class="list-grid__category">
+                {w.category}
+              </p>
+              <p data-list-grid-fade class="list-grid__year">
+                {w.where}
+              </p>
+              <span data-list-grid-fade class="list-grid__arrow" aria-hidden="true">
+                <Icon name="arrow-up-right" />
+              </span>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 5px;
+    border-radius: var(--border-radius-round);
+    background: var(--surface-secondary);
+
+    &__btn {
+      padding: 0.5625rem 1rem;
+      border: 0;
+      border-radius: var(--border-radius-round);
+      background: transparent;
+      color: var(--content-secondary);
+      font: inherit;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition:
+        background 0.3s,
+        color 0.3s;
+
+      span {
+        margin-left: 4px;
+        font-family: var(--tertiary-family);
+        font-size: 0.75rem;
+        opacity: 0.7;
+      }
+
+      &:hover {
+        color: var(--content-primary);
+      }
+
+      &[aria-pressed="true"] {
+        background: var(--surface-primary);
+        color: var(--content-primary);
+        box-shadow: 0 1px 3px rgba(20, 18, 16, 0.12);
+      }
+    }
+  }
+
+  .list-grid {
+    --list-grid-columns: 3;
+    --list-grid-thumb: 8.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+    margin-top: var(--_spacing---section-space--small);
+
+    &__bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    &__toggle {
+      position: relative;
+      display: grid;
+      grid-template-columns: 4.5em 4.5em;
+      padding: 5px;
+      border-radius: 2em;
+      background-color: var(--surface-secondary);
+    }
+
+    &__button {
+      position: relative;
+      z-index: 1;
+      padding: 0.5625rem 0;
+      border: 0;
+      background: transparent;
+      color: var(--content-secondary);
+      font: inherit;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      line-height: 1.286;
+      cursor: pointer;
+      transition: color 0.3s 0.2s;
+
+      &:focus-visible {
+        outline-offset: -0.125em;
+        border-radius: 2em;
+      }
+
+      &[aria-pressed="true"] {
+        color: var(--light-100);
+      }
+    }
+
+    &__indicator {
+      position: absolute;
+      top: 5px;
+      bottom: 5px;
+      left: 5px;
+      width: calc(50% - 5px);
+      border-radius: 2em;
+      background-color: var(--dark-900);
+    }
+
+    &__list {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.75rem;
+    }
+
+    &__item {
+      min-width: 0;
+      border-radius: 1.5rem;
+      background: var(--surface-secondary);
+
+      &[hidden] {
+        display: none;
+      }
+    }
+
+    &__link {
+      display: grid;
+      grid-template-columns: var(--list-grid-thumb) minmax(0, 2fr) auto auto auto;
+      grid-template-areas: "media title category year arrow";
+      align-items: center;
+      column-gap: 1.25em;
+      padding: 10px 14px 10px 10px;
+      color: var(--content-primary);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--content-primary);
+      }
+
+      &:focus-visible {
+        outline-offset: 2px;
+        border-radius: 1.5rem;
+      }
+
+      &:hover .list-grid__image {
+        transform: scale(1.04);
+      }
+
+      &:hover .list-grid__title {
+        color: var(--brand-primary-dark);
+      }
+
+      &:hover .list-grid__arrow {
+        transform: rotate(45deg);
+      }
+    }
+
+    &__media {
+      grid-area: media;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      border-radius: var(--border-radius-medium);
+      background-color: var(--surface-primary);
+    }
+
+    &__image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    &__ph {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5em;
+      color: var(--content-secondary);
+      font-size: 0.8125rem;
+      font-style: italic;
+      text-align: center;
+    }
+
+    &__title {
+      grid-area: title;
+      justify-self: start;
+      max-width: 100%;
+      padding-left: 6px;
+      overflow: hidden;
+      font-family: var(--primary-family);
+      font-size: 1.375rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transition: color 0.3s;
+    }
+
+    &__category,
+    &__year {
+      padding: 7px 12px;
+      border-radius: 100em;
+      font-size: 0.8125rem;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    &__category {
+      grid-area: category;
+      justify-self: start;
+      background-color: var(--surface-primary);
+    }
+
+    &__year {
+      grid-area: year;
+      justify-self: end;
+      color: var(--content-secondary);
+      box-shadow: inset 0 0 0 1px var(--border-color);
+    }
+
+    &__arrow {
+      grid-area: arrow;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      justify-self: end;
+      align-self: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--brand-primary);
+      color: var(--content-on-primary);
+      transition: transform 0.3s;
+
+      :global(svg) {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    /* Grid view */
+    &[data-list-grid-view="grid"] {
+      .list-grid__indicator {
+        left: 50%;
+      }
+
+      .list-grid__list {
+        grid-template-columns: repeat(var(--list-grid-columns), minmax(0, 1fr));
+        gap: 1.5rem;
+      }
+
+      .list-grid__link {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        grid-template-areas:
+          "media media media"
+          "title title arrow"
+          "category year arrow";
+        column-gap: 8px;
+        row-gap: 10px;
+        padding: 12px 12px 18px;
+      }
+
+      .list-grid__media {
+        aspect-ratio: 4 / 3;
+        margin-bottom: 6px;
+        border-radius: 1rem;
+      }
+
+      .list-grid__category {
+        margin-left: 6px;
+      }
+
+      .list-grid__year {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 767px) {
+      --list-grid-columns: 1;
+      --list-grid-thumb: 5.5em;
+
+      &__toggle {
+        display: none;
+      }
+
+      &__link {
+        grid-template-columns: var(--list-grid-thumb) minmax(0, 1fr) auto;
+        grid-template-areas:
+          "media title arrow"
+          "media category arrow";
+        row-gap: 6px;
+      }
+
+      &__year {
+        display: none;
+      }
+
+      &__title {
+        font-size: 1.125rem;
+      }
+
+      .filters {
+        flex-wrap: nowrap;
+        max-width: 100%;
+        overflow-x: auto;
+        scrollbar-width: none;
+
+        &__btn {
+          padding: 0.5rem 0.75rem;
+          font-size: 0.875rem;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &__link:hover .list-grid__image {
+        transform: none;
+      }
+    }
+  }
+</style>

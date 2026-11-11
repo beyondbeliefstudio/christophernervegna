@@ -1,0 +1,63 @@
+---
+// The one header pattern every section opens with: speech bubble, title, and an
+// optional single line of context.
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// PROPS
+interface Props {
+  id: string;
+  title: string;
+  bubble?: string;
+  sub?: string;
+  red?: boolean;
+  dark?: boolean;
+  center?: boolean;
+}
+
+const { id, title, bubble, sub, red = false, dark = false, center = false } = Astro.props;
+---
+
+<div class:list={["sec-head", { "sec-head--dark": dark, "sec-head--center": center }]}>
+  {bubble && (
+    <span class:list={["bubble sec-head__bubble", { "bubble--red": red }]} set:html={bubble} />
+  )}
+  <Heading tag="h2" size="xxl" id={id} class="sec-head__title">
+    <Fragment set:html={title} />
+  </Heading>
+  {sub && <p class="sec-head__sub" set:html={sub} />}
+</div>
+
+<style lang="scss">
+  .sec-head {
+    max-width: 53.75rem;
+
+    &__bubble {
+      margin-bottom: 1.625rem;
+    }
+
+    &__sub {
+      margin-top: 1.125rem;
+      max-width: 42.5rem;
+      font-size: 1.25rem;
+      line-height: 1.55;
+      color: var(--content-secondary);
+    }
+
+    &--dark {
+      .sec-head__title {
+        color: var(--light-100);
+      }
+
+      .sec-head__sub {
+        color: color-mix(in srgb, var(--light-100) 70%, transparent);
+      }
+    }
+
+    &--center {
+      margin: 0 auto;
+      max-width: 56.25rem;
+      text-align: center;
+    }
+  }
+</style>

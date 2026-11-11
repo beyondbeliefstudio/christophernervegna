@@ -1,0 +1,141 @@
+---
+// The people side of the job: one featured client story, three quick notes and
+// a closing line.
+// COMPONENTS
+import { Icon } from "astro-icon/components";
+import Heading from "@/components/Heading.astro";
+import SecHead from "@/components/SecHead.astro";
+
+// DATA
+import { notesData } from "@/data/homeData";
+---
+
+<section id="with-me" aria-labelledby="withme-title">
+  <div class="container container-md">
+    <SecHead
+      id="withme-title"
+      bubble="What are you like to work with?"
+      title="Patient. I&rsquo;ll explain it as many times as it takes, without making anyone feel dumb."
+      sub="A lot of my week is spent on calls, and it&rsquo;s the part of the job I didn&rsquo;t expect to love."
+    />
+
+    <div class="withme">
+      <article class="withme__story">
+        <div class="sticker-art withme__art">
+          <Icon name="art-mockup" aria-hidden="true" />
+        </div>
+        <p class="withme__kicker">A story from a client call</p>
+        <Heading tag="h3" size="xl" class="withme__title">
+          The agency mockup that wasn&rsquo;t built for the web.
+        </Heading>
+        <p>
+          A hospitality group brought me a finished mockup from their agency. It looked great, but
+          nobody had planned for phones, for how guests move through a site, or for the content the
+          restaurant would need to update.
+        </p>
+        <p>
+          On one call with the group, the agency and the restaurant, I got everyone to treat it as a
+          starting point. I rebuilt it on our platform with their branding, and the restaurant could
+          still edit it themselves. They loved where it landed.
+        </p>
+      </article>
+
+      <ul class="withme__notes">
+        {notesData.map(note => (
+          <li class="card withme__note">
+            <Heading tag="h3" size="xs">
+              {note.title}
+            </Heading>
+            <p set:html={note.text} />
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <Heading tag="p" size="l" weight="fw600" class="withme__closer">
+      So whether the room needs a designer, a developer, or someone to demo the product and answer
+      the hard questions, I&rsquo;ve sat in that chair.
+    </Heading>
+  </div>
+</section>
+
+<style lang="scss">
+  .withme__closer {
+    max-width: 56.25rem;
+    margin-top: 4rem;
+    line-height: 1.2;
+  }
+
+  .withme {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: stretch;
+    gap: 1.25rem;
+    margin-top: var(--_spacing---section-space--small);
+
+    &__story {
+      position: relative;
+      padding: clamp(2rem, 4vw, 3.5rem);
+      border-radius: var(--border-radius-xl);
+      background: var(--brand-primary);
+      color: var(--content-on-primary);
+
+      p:not(.withme__kicker) {
+        max-width: 38.75rem;
+        margin-top: 1.125rem;
+        font-size: 1.125rem;
+        line-height: 1.6;
+      }
+    }
+
+    &__art {
+      position: absolute;
+      top: -30px;
+      right: 32px;
+      width: 8.125rem;
+      height: 7rem;
+      transform: rotate(6deg);
+    }
+
+    &__kicker {
+      font-family: var(--tertiary-family);
+      font-size: 0.8125rem;
+      opacity: 0.85;
+    }
+
+    :global(.withme__title) {
+      max-width: 32.5rem;
+      margin-top: 0.875rem;
+    }
+
+    &__notes {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    &__note {
+      padding: 1.625rem 1.875rem;
+
+      p {
+        margin-top: 0.5rem;
+        color: var(--content-secondary);
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+    }
+
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr;
+
+      &__art {
+        right: 20px;
+        width: 6.5rem;
+        height: 5.625rem;
+      }
+
+      :global(.withme__title) {
+        padding-right: 5.625rem;
+      }
+    }
+  }
+</style>

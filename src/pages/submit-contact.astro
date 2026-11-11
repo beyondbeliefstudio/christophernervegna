@@ -1,0 +1,27 @@
+---
+// Form POST destination for ContactForm.astro. Real page (returns 200 to the
+// Netlify form post) but kept out of search and the sitemap.
+// COMPONENTS
+import Layout from "@/layouts/Layout.astro";
+import Links from "@/components/Links.astro";
+import SimplePage from "@/components/SimplePage.astro";
+---
+
+<Layout
+  pageTitle="Message sent | Chris Nervegna"
+  description="Thanks for reaching out. Chris will get back to you soon."
+  noindex
+  hideChat
+>
+  <SimplePage
+    bubble="Got it."
+    title="Thanks. Your message is on its way."
+    lead="I read every one myself and usually reply within a day or two."
+  >
+    <div class="btn-wrapper btn-wrapper--left">
+      <Links variant="dark" href="/">
+        Back to the homepage
+      </Links>
+    </div>
+  </SimplePage>
+</Layout>

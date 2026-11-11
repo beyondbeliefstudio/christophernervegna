@@ -1,0 +1,89 @@
+[
+  {
+    "id": "nightcap",
+    "q": "Old Fashioned or Negroni?",
+    "options": [
+      { "id": "old-fashioned", "label": "Old Fashioned" },
+      { "id": "negroni", "label": "Negroni" },
+      { "id": "beer", "label": "Neither, hand me a beer" },
+      { "id": "espresso-martini", "label": "Espresso martini, obviously" }
+    ],
+    "mine": "Depends on my mood. Both are always welcome."
+  },
+  {
+    "id": "coffee",
+    "q": "What's your coffee order?",
+    "options": [
+      { "id": "cortado", "label": "Cortado" },
+      { "id": "drip", "label": "Drip, black" },
+      { "id": "iced", "label": "Iced, any season" },
+      { "id": "sweet", "label": "Whatever has the most syrup" }
+    ],
+    "mine": "Cortado. Every time."
+  },
+  {
+    "id": "brisket",
+    "q": "Brisket: point or flat?",
+    "options": [
+      { "id": "point", "label": "Point, and make it burnt ends" },
+      { "id": "flat", "label": "Flat" },
+      { "id": "both", "label": "Both, I'm not picking" },
+      { "id": "sides", "label": "I'm here for the sides" }
+    ],
+    "mine": "Point. Burnt ends off the Weber are the whole reason I smoke a brisket."
+  },
+  {
+    "id": "grill",
+    "q": "Charcoal, gas or pellet?",
+    "options": [
+      { "id": "charcoal", "label": "Charcoal" },
+      { "id": "gas", "label": "Gas" },
+      { "id": "pellet", "label": "Pellet" },
+      { "id": "someone-else", "label": "Whoever's hosting" }
+    ],
+    "mine": "Charcoal. The Weber Smoky Mountain does the low and slow stuff."
+  },
+  {
+    "id": "golf-cart",
+    "q": "Eighteen holes: walk or ride?",
+    "options": [
+      { "id": "walk", "label": "Walk" },
+      { "id": "ride", "label": "Ride" },
+      { "id": "snacks", "label": "Ride, the cart has snacks" },
+      { "id": "clubhouse", "label": "I'm here for the clubhouse" }
+    ],
+    "mine": ""
+  },
+  {
+    "id": "golf-trouble",
+    "q": "Where does your round fall apart?",
+    "options": [
+      { "id": "tee", "label": "Off the tee" },
+      { "id": "approach", "label": "The approach" },
+      { "id": "short-game", "label": "Around the green" },
+      { "id": "putting", "label": "Three putts, every time" }
+    ],
+    "mine": ""
+  },
+  {
+    "id": "tabs",
+    "q": "Tabs or spaces?",
+    "options": [
+      { "id": "tabs", "label": "Tabs" },
+      { "id": "spaces", "label": "Spaces" },
+      { "id": "prettier", "label": "Whatever Prettier says" },
+      { "id": "what", "label": "I don't write code, what is this?" }
+    ],
+    "mine": ""
+  },
+  {
+    "id": "builder",
+    "q": "Page builder or hand-coded?",
+    "options": [
+      { "id": "builder", "label": "Page builder" },
+      { "id": "hand-coded", "label": "Hand-coded" },
+      { "id": "depends", "label": "Depends on the client" }
+    ],
+    "mine": "Depends on the client. I'm happy in either, and I'll tell you which one fits."
+  }
+]

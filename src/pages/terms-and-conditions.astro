@@ -1,0 +1,53 @@
+---
+// COMPONENTS
+import Layout from "@/layouts/Layout.astro";
+import SimplePage from "@/components/SimplePage.astro";
+
+// DATA
+import { baseData, mailtoHref } from "@/data/siteData";
+---
+
+<Layout
+  pageTitle="Terms & Conditions | Chris Nervegna"
+  description="The terms for using christophernervegna.com, a personal portfolio site."
+  hideChat
+>
+  <SimplePage bubble="The fine print" title="Terms & Conditions" updated="November 2026">
+    <div class="terms__content">
+      <h2>Using this site</h2>
+      <p>
+        This is a personal portfolio. You&rsquo;re welcome to browse it, share it and link to it. By
+        using it, you agree to these terms.
+      </p>
+
+      <h2>The work shown here</h2>
+      <p>
+        Client projects are shown as examples of my work. The sites, brands, logos and photography
+        belong to their owners. Projects from BentoBox were built as part of my role there.
+      </p>
+
+      <h2>My content</h2>
+      <p>
+        The writing, illustrations and code on this site are mine unless noted. Please don&rsquo;t
+        republish them as your own.
+      </p>
+
+      <h2>The chat</h2>
+      <p>
+        The &ldquo;Ask about Chris&rdquo; box writes answers with AI from information I&rsquo;ve
+        provided. It can get things wrong. For anything that matters, email me directly.
+      </p>
+
+      <h2>No warranty</h2>
+      <p>
+        The site is provided as is. I do my best to keep it accurate and working, but I can&rsquo;t
+        promise it always will be, and I&rsquo;m not liable for anything that comes from using it.
+      </p>
+
+      <h2>Questions</h2>
+      <p>
+        Email <a href={mailtoHref}>{baseData.email}</a>.
+      </p>
+    </div>
+  </SimplePage>
+</Layout>

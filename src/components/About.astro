@@ -1,0 +1,262 @@
+---
+// Story: a full-bleed dark band with three short chapters on one timeline, so it
+// can be skimmed left to right.
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Photo from "@/components/Photo.astro";
+import SecHead from "@/components/SecHead.astro";
+
+// DATA
+import { chaptersData, perfectDayData } from "@/data/homeData";
+---
+
+<section id="about" class="story bg-dark" data-progress-nav-anchor aria-labelledby="about-title">
+  <div class="container container-md">
+    <div class="story__top">
+      <SecHead
+        id="about-title"
+        dark
+        red
+        bubble="How&rsquo;d you get here?"
+        title="Pixels first, then people."
+        sub="A design degree, a decade-plus of web design experience, and my own studio on the side."
+      />
+      <Photo
+        class="story__photo"
+        src="https://images.unsplash.com/photo-1545184180-25d471fe75eb?w=900&q=70&auto=format&fit=crop"
+        alt="Stand-in photo of someone working on a laptop"
+        label="Photo: you at work, mid-conversation"
+        caption="Probably explaining DNS to someone."
+        ratio="4 / 3.4"
+      />
+    </div>
+
+    <ol class="story__chapters">
+      {chaptersData.map(c => (
+        <li class:list={["chapter", { "chapter--now": c.current }]}>
+          <span class="chapter__when">{c.when}</span>
+          <Heading tag="h3" size="s" class="chapter__title">
+            {c.role}
+          </Heading>
+          {c.link ? (
+            <a class="chapter__org" href={c.link} target="_blank" rel="noopener">
+              {c.org} <span aria-hidden="true">&#8599;</span>
+            </a>
+          ) : (
+            <span class="chapter__org">{c.org}</span>
+          )}
+          <ul class="chapter__points">
+            {c.points.map(point => (
+              <li set:html={point} />
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ol>
+
+    <div class="story__day">
+      <span class="story__day-label">A perfect day</span>
+      <ol class="story__day-list">
+        {perfectDayData.map(item => (
+          <li class="day-item">
+            <span class="day-item__time">{item.time}</span>
+            <span class="day-item__title">{item.title}</span>
+            <p set:html={item.text} />
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .story {
+    margin: var(--_spacing---section-space--main) 0.75rem 0;
+    padding: var(--_spacing---section-space--main) 0;
+    border-radius: 3rem;
+
+    &__top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 22.5rem;
+      align-items: end;
+      gap: 2.5rem;
+    }
+
+    :global(.story__photo) {
+      transform: rotate(3deg);
+    }
+
+    &__chapters {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0 2.5rem;
+      margin-top: 5rem;
+    }
+
+    &__day {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 10fr);
+      gap: 1.5rem 2.5rem;
+      margin-top: 4.5rem;
+      padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 3vw, 2.5rem);
+      border-radius: var(--border-radius-large);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &__day-label {
+      color: var(--brand-primary);
+      font-family: var(--primary-family);
+      font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    &__day-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.5rem 2rem;
+    }
+
+    @media (max-width: 960px) {
+      &__chapters {
+        grid-template-columns: 1fr;
+        row-gap: 3rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      &__top {
+        grid-template-columns: 1fr;
+      }
+
+      :global(.story__photo) {
+        max-width: 20rem;
+      }
+    }
+
+    @media (max-width: 720px) {
+      margin-inline: 6px;
+      border-radius: var(--border-radius-large);
+    }
+
+    @media (max-width: 1100px) {
+      &__day {
+        grid-template-columns: 1fr;
+      }
+
+      &__day-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      &__day-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  .day-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    &__time {
+      color: color-mix(in srgb, var(--light-100) 55%, transparent);
+      font-family: var(--tertiary-family);
+      font-size: 0.75rem;
+    }
+
+    &__title {
+      color: var(--light-100);
+      font-family: var(--primary-family);
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin-top: 0.25rem;
+      color: color-mix(in srgb, var(--light-100) 72%, transparent);
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+  }
+
+  .chapter {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(255, 255, 255, 0.16);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -7px;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--dark-900);
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+    }
+
+    &--now {
+      border-top-color: var(--brand-primary);
+
+      &::before {
+        background: var(--brand-primary);
+        box-shadow: none;
+      }
+    }
+
+    &__when {
+      color: var(--brand-primary);
+      font-family: var(--tertiary-family);
+      font-size: 0.8125rem;
+    }
+
+    &__title {
+      margin-top: 0.75rem;
+      color: var(--light-100);
+    }
+
+    &__org {
+      margin-top: 0.375rem;
+      color: color-mix(in srgb, var(--light-100) 60%, transparent);
+      font-size: 0.9375rem;
+      text-decoration: none;
+    }
+
+    a.chapter__org:hover {
+      color: var(--brand-primary);
+    }
+
+    &__points {
+      display: grid;
+      gap: 0.625rem;
+      margin-top: 1.25rem;
+
+      li {
+        position: relative;
+        padding-left: 1.125rem;
+        color: color-mix(in srgb, var(--light-100) 78%, transparent);
+        font-size: 1rem;
+        line-height: 1.55;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0.62em;
+          left: 0;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--brand-primary);
+        }
+      }
+    }
+  }
+</style>

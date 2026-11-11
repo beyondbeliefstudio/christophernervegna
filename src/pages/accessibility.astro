@@ -1,0 +1,52 @@
+---
+// COMPONENTS
+import Layout from "@/layouts/Layout.astro";
+import SimplePage from "@/components/SimplePage.astro";
+
+// DATA
+import { baseData, mailtoHref } from "@/data/siteData";
+---
+
+<Layout
+  pageTitle="Accessibility | Chris Nervegna"
+  description="How christophernervegna.com is built to work for everyone, and how to report a problem."
+  hideChat
+>
+  <SimplePage
+    bubble="The fine print"
+    title="Accessibility"
+    lead="I build every site to work for as many people as possible, and this one is no exception."
+    updated="November 2026"
+  >
+    <div class="terms__content">
+      <h2>What I aim for</h2>
+      <p>This site aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.</p>
+
+      <h2>How it&rsquo;s built</h2>
+      <ul>
+        <li>Real headings and landmarks, so screen readers can move through the page.</li>
+        <li>Everything works with a keyboard, with visible focus states.</li>
+        <li>Text and buttons meet contrast guidelines.</li>
+        <li>Animation slows down or stops if your device asks for reduced motion.</li>
+        <li>
+          Images have descriptions, and decorative illustrations are hidden from screen readers.
+        </li>
+        <li>
+          The stickers in &ldquo;Off the clock&rdquo; open with Enter or Space as well as a click.
+        </li>
+      </ul>
+
+      <h2>Known gaps</h2>
+      <p>
+        Dragging the stickers around needs a mouse or touch. Their stories are still fully reachable
+        from the keyboard.
+      </p>
+
+      <h2>Found a problem?</h2>
+      <p>
+        Please tell me. Email <a href={mailtoHref}>{baseData.email}</a> with the page and what
+        happened, and I&rsquo;ll fix it.
+      </p>
+    </div>
+  </SimplePage>
+</Layout>

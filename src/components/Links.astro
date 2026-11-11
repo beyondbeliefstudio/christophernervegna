@@ -1,0 +1,85 @@
+---
+// HELPERS
+import type { HTMLAttributes } from "astro/types";
+
+// PROPS
+export interface LinkProps extends HTMLAttributes<"a"> {
+  href: string;
+  variant?: "primary" | "dark" | "light" | "outline-light" | "inline";
+  classes?: string;
+}
+
+const { href, variant = "primary", classes, ...rest } = Astro.props;
+---
+
+<a href={href} class:list={["btn", variant, classes]} {...rest}>
+  <slot />
+</a>
+
+<style lang="scss" is:global>
+  .btn {
+    /* Campari: the one loud action */
+    &.primary {
+      background-color: var(--brand-primary);
+      color: var(--content-on-primary);
+      box-shadow: 0 14px 30px -10px rgba(217, 48, 31, 0.55);
+
+      &:hover,
+      &:focus-visible {
+        color: var(--content-on-primary);
+      }
+    }
+
+    /* Ink: the default action on light sections */
+    &.dark {
+      background-color: var(--dark-900);
+      color: var(--light-100);
+
+      &:hover,
+      &:focus-visible {
+        color: var(--light-100);
+      }
+    }
+
+    /* White with a hairline: the secondary action on light sections */
+    &.light {
+      background-color: var(--surface-primary);
+      color: var(--content-primary);
+      box-shadow: inset 0 0 0 1px var(--border-color);
+
+      &:hover,
+      &:focus-visible {
+        color: var(--content-primary);
+      }
+    }
+
+    /* Ghost: the secondary action on dark sections */
+    &.outline-light {
+      background-color: rgba(255, 255, 255, 0.08);
+      color: var(--light-100);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+
+      &:hover,
+      &:focus-visible {
+        background-color: rgba(255, 255, 255, 0.14);
+        color: var(--light-100);
+      }
+    }
+
+    /* Text link with an arrow */
+    &.inline {
+      padding: 0;
+      background: none;
+      color: inherit;
+
+      &::after {
+        content: "";
+        width: 1.125rem;
+        height: 1.125rem;
+        background: currentColor;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E")
+          center / contain no-repeat;
+      }
+    }
+  }
+</style>

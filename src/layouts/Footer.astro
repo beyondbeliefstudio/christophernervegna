@@ -1,0 +1,96 @@
+---
+// One compact row under the contact band: section links on the left, copyright
+// and legal links on the right.
+// DATA
+import { baseData } from "@/data/siteData";
+import { navData, legalNav } from "@/data/navData";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container container-md footer__row">
+    <nav aria-label="Footer">
+      <ul class="footer__nav">
+        {navData.map(item => (
+          <li>
+            <a href={item.href}>{item.title}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="footer__meta">
+      <p>
+        &copy; {year} {baseData.fullName}. Hand-built in Astro in {baseData.location.full}.
+      </p>
+      <ul class="footer__legal">
+        {legalNav.map(item => (
+          <li>
+            <a href={item.href}>{item.title}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  .footer {
+    margin-top: -1px;
+    background: var(--dark-900);
+    color: color-mix(in srgb, var(--light-100) 60%, transparent);
+
+    &__row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem 2rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    &__nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+
+      a {
+        color: var(--light-100);
+        font-family: var(--primary-family);
+        font-size: 1.0625rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        text-decoration: none;
+
+        &:hover {
+          color: var(--brand-primary);
+        }
+      }
+    }
+
+    &__meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1.25rem;
+      font-size: 0.8125rem;
+    }
+
+    &__legal {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+          color: var(--light-100);
+        }
+      }
+    }
+  }
+</style>

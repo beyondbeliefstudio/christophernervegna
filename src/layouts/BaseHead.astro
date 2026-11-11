@@ -1,0 +1,106 @@
+---
+// COMPONENTS
+import Analytics from "@/components/Analytics.astro";
+import AhrefsAnalytics from "@/components/AhrefsAnalytics.astro";
+
+// DATA
+import { baseData } from "@/data/siteData";
+
+// PROPS
+/**
+ * Every page passes its own `pageTitle` and `description`. `noindex` keeps a
+ * single page out of search (the form thank-you page); PUBLIC_NOINDEX=true does
+ * the same for a whole staging deploy.
+ */
+const {
+  pageTitle = baseData.title,
+  description = baseData.description,
+  noindex = false,
+} = Astro.props;
+
+const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+const AHREFS_DATA_KEY = import.meta.env.PUBLIC_AHREFS_DATA_KEY;
+const hideFromSearch = noindex || import.meta.env.PUBLIC_NOINDEX === "true";
+
+// Open Graph
+const ogImage = new URL("/og-image.png", Astro.site).toString();
+const ogUrl = Astro.url.toString();
+
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: baseData.fullName,
+  jobTitle: baseData.jobTitle,
+  url: Astro.site?.toString(),
+  email: `mailto:${baseData.email}`,
+  sameAs: [baseData.social.linkedin, baseData.studio.url],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: baseData.location.city,
+    addressRegion: baseData.location.state,
+    addressCountry: "US",
+  },
+  alumniOf: ["Kean University", "Fashion Institute of Technology"],
+  knowsAbout: [
+    "Web design",
+    "Astro",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Solutions engineering",
+    "Web accessibility",
+  ],
+};
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={Astro.url} />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="color-scheme" content="light" />
+  {hideFromSearch && <meta name="robots" content="noindex, nofollow" />}
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={ogUrl} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={ogUrl} />
+  <meta property="twitter:title" content={pageTitle} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={ogImage} />
+
+  <!-- Fonts are self-hosted; @font-face lives in global.scss -->
+  <link
+    rel="preload"
+    href="/fonts/FunnelDisplay-Variable.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
+  <link
+    rel="preload"
+    href="/fonts/FunnelSans-Variable.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
+
+  <script type="application/ld+json" set:html={JSON.stringify(person)} />
+  <script src="@/js/app.js"></script>
+
+  <Analytics measurementId={GA_MEASUREMENT_ID} />
+  <AhrefsAnalytics dataKey={AHREFS_DATA_KEY} />
+</head>

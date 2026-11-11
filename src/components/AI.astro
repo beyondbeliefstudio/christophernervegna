@@ -1,0 +1,304 @@
+---
+// "AI makes me faster. It doesn't make the decisions." Story on the left, an
+// excerpt of the rules file on the right, then three tools fanned like cards.
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import SecHead from "@/components/SecHead.astro";
+import { Image } from "astro:assets";
+
+// IMAGES
+import cookbookShot from "@/assets/ai/cookbook.png";
+import cartiqShot from "@/assets/ai/cartiq.png";
+import homeplateShot from "@/assets/ai/homeplate.png";
+const shots = { cookbook: cookbookShot, cartiq: cartiqShot, homeplate: homeplateShot };
+
+// DATA
+import { aiProjectsData, aiRulesData } from "@/data/homeData";
+---
+
+<section id="ai" class="ai" data-progress-nav-anchor aria-labelledby="ai-title">
+  <div class="container container-md">
+    <div class="ai__intro">
+      <div class="ai__text">
+        <SecHead
+          id="ai-title"
+          bubble="Do you use AI?"
+          red
+          title="AI makes me faster. It doesn&rsquo;t make the decisions."
+        />
+        <p>
+          I use AI the way I&rsquo;d use a very fast junior developer who has read all my notes.
+          Before it writes a line, I&rsquo;ve built the design system and the components it&rsquo;s
+          allowed to use, and I&rsquo;ve written down my rules: how I name things, how I structure a
+          page, what I never want to see.
+        </p>
+        <p>
+          Then I read every line it writes and rewrite what isn&rsquo;t right. Sites launch sooner
+          that way, and they still look and read like a person made them. If you can tell AI was
+          involved, I did it wrong.
+        </p>
+      </div>
+
+      <figure class="rules" aria-label="An excerpt from the rules file my AI agent reads">
+        <div class="rules__bar">
+          <span class="rules__dots" aria-hidden="true">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+          <span class="rules__tab rules__tab--on">~/CLAUDE.md</span>
+          <span class="rules__tab">project/CLAUDE.md</span>
+        </div>
+        <div class="rules__body">
+          <p class="rules__heading"># How I build. Read this first.</p>
+          <ul>
+            {aiRulesData.map(rule => (
+              <li set:html={rule} />
+            ))}
+          </ul>
+        </div>
+        <figcaption>One rules file for everything I build, one for each project.</figcaption>
+      </figure>
+    </div>
+
+    <Heading tag="h3" size="m" weight="fw600" class="ai__lead">
+      I also reach for it when something at work or at home needs a tool that doesn&rsquo;t exist
+      yet.
+    </Heading>
+
+    <div class="fan">
+      {aiProjectsData.map(p => (
+        <article class:list={["fan__card", `fan__card--${p.tone}`]}>
+          <p class="fan__tag">{p.tag}</p>
+          <Heading tag="h4" size="l" class="fan__title">
+            {p.name}
+          </Heading>
+          <p class="fan__what">{p.what}</p>
+          <div class="fan__shot">
+            <Image
+              src={shots[p.img]}
+              alt={p.shot}
+              widths={[480, 720, 960]}
+              sizes="(max-width: 900px) 92vw, 30vw"
+              loading="lazy"
+            />
+          </div>
+          <p class="fan__stack">{p.stack}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .ai {
+    &__intro {
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+      align-items: center;
+      gap: 3rem clamp(2.5rem, 6vw, 6rem);
+    }
+
+    &__text p {
+      max-width: 37.5rem;
+      margin-top: 1.375rem;
+      font-size: var(--_typography---font-size--text-large);
+      line-height: 1.7;
+    }
+
+    :global(.ai__lead) {
+      max-width: 42.5rem;
+      margin: 7.5rem auto 0;
+      text-align: center;
+      line-height: 1.25;
+    }
+
+    @media (max-width: 960px) {
+      &__intro {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  .rules {
+    overflow: hidden;
+    border-radius: var(--border-radius-large);
+    background: var(--dark-900);
+    color: var(--light-100);
+    box-shadow: 0 30px 60px -30px rgba(20, 18, 16, 0.5);
+    transform: rotate(1.5deg);
+
+    &__bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    &__dots {
+      display: flex;
+      gap: 6px;
+      margin-right: 0.625rem;
+
+      i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(244, 241, 236, 0.3);
+
+        &:first-child {
+          background: var(--brand-primary);
+        }
+      }
+    }
+
+    &__tab {
+      padding: 6px 12px;
+      border-radius: 8px;
+      color: color-mix(in srgb, var(--light-100) 55%, transparent);
+      font-family: var(--tertiary-family);
+      font-size: 0.75rem;
+
+      &--on {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--light-100);
+      }
+    }
+
+    &__body {
+      padding: clamp(1.5rem, 3vw, 2.25rem);
+      font-family: var(--tertiary-family);
+      font-size: clamp(0.8125rem, 1vw, 0.9375rem);
+      line-height: 1.7;
+
+      ul {
+        display: grid;
+        gap: 0.625rem;
+      }
+
+      li {
+        position: relative;
+        padding-left: 1.375rem;
+
+        &::before {
+          content: "-";
+          position: absolute;
+          left: 0;
+          color: color-mix(in srgb, var(--light-100) 45%, transparent);
+        }
+      }
+    }
+
+    &__heading {
+      margin-bottom: 1.125rem;
+      color: var(--brand-primary);
+    }
+
+    figcaption {
+      padding: 0 clamp(1.5rem, 3vw, 2.25rem) 1.5rem;
+      color: color-mix(in srgb, var(--light-100) 55%, transparent);
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 960px) {
+      transform: none;
+    }
+  }
+
+  .fan {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+
+    &__card {
+      display: flex;
+      flex-direction: column;
+      padding: 1.75rem 1.5rem 1.5rem;
+      border-radius: var(--border-radius-large);
+      transition: transform 0.5s var(--ease-out);
+
+      &:nth-child(1) {
+        transform: rotate(-4deg) translateY(28px);
+      }
+
+      &:nth-child(3) {
+        transform: rotate(4deg) translateY(28px);
+      }
+
+      &:hover {
+        transform: rotate(0) translateY(-6px);
+      }
+
+      &--ink {
+        background: var(--dark-900);
+        color: var(--light-100);
+      }
+
+      &--red {
+        background: var(--brand-primary);
+        color: var(--content-on-primary);
+      }
+
+      &--crema {
+        background: var(--light-200);
+        color: var(--content-primary);
+      }
+    }
+
+    &__tag {
+      font-family: var(--tertiary-family);
+      font-size: 0.75rem;
+      opacity: 0.75;
+    }
+
+    :global(.fan__title) {
+      margin-top: 0.625rem;
+    }
+
+    &__what {
+      margin-top: 0.875rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    &__shot {
+      margin-top: 1.375rem;
+      overflow: hidden;
+      border-radius: 1rem;
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        object-position: top left;
+      }
+    }
+
+    &__stack {
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      opacity: 0.75;
+    }
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+
+      &__card:nth-child(n) {
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &__card:nth-child(n),
+      &__card:hover {
+        transform: none;
+      }
+    }
+  }
+</style>

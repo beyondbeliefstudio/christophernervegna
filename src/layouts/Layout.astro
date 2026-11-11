@@ -1,0 +1,39 @@
+---
+// COMPONENTS
+import BaseHead from "@/layouts/BaseHead.astro";
+import Nav from "@/layouts/Nav.astro";
+import Footer from "@/layouts/Footer.astro";
+import Chat from "@/components/Chat.astro";
+import Grain from "@/components/Grain.astro";
+import UserBack from "@/components/UserBack.astro";
+
+// STYLES
+import "@/styles/global.scss";
+
+// PROPS
+/**
+ * `hideChat` is for pages where the floating "Ask about Chris" box would get in
+ * the way (the legal pages and the form thank-you page).
+ */
+const { hideChat = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <BaseHead {...Astro.props} />
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <div class="page">
+      <Nav />
+      <main id="main">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+    {!hideChat && <Chat />}
+    <Grain />
+    <UserBack />
+  </body>
+</html>

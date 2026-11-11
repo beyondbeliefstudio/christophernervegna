@@ -1,0 +1,146 @@
+---
+// Contact: the dark band the page ends on. Email and the pitch on the left,
+// status and the resume/LinkedIn actions on the right. Section links live in
+// the footer row below. The form is its own section (MessageForm.astro).
+// COMPONENTS
+import Links from "@/components/Links.astro";
+
+// DATA
+import { baseData, mailtoHref } from "@/data/siteData";
+---
+
+<section id="reach" class="contact bg-dark" data-progress-nav-anchor aria-labelledby="reach-title">
+  <div class="container container-md contact__grid">
+    <div class="contact__main">
+      <span class="bubble bubble--red" id="reach-title">
+        How do I reach you?
+      </span>
+      <p class="contact__email">
+        <a href={mailtoHref}>{baseData.email}</a>
+      </p>
+      <p class="contact__lede">
+        I&rsquo;m looking for my next role. That could be designing and building websites, leading
+        the team that does, or working as a sales or solutions engineer for a product in the web
+        space. If you&rsquo;re hiring for any of those, or you&rsquo;re not sure which one I am,
+        I&rsquo;d like to talk.
+      </p>
+    </div>
+
+    <div class="contact__side">
+      <p class="contact__status">
+        <i aria-hidden="true"></i>
+        {baseData.status}
+      </p>
+      <div class="contact__actions">
+        <Links variant="primary" href={baseData.resumes.web.href} target="_blank" rel="noopener">
+          {baseData.resumes.web.label}
+        </Links>
+        <Links
+          variant="primary"
+          href={baseData.resumes.solutions.href}
+          target="_blank"
+          rel="noopener"
+        >
+          {baseData.resumes.solutions.label}
+        </Links>
+      </div>
+      <Links
+        variant="inline"
+        classes="contact__linkedin"
+        href={baseData.social.linkedin}
+        target="_blank"
+        rel="noopener"
+      >
+        Or find me on LinkedIn
+      </Links>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .contact {
+    margin-top: var(--_spacing---section-space--large);
+    padding: var(--_spacing---section-space--main) 0 0;
+    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+
+    &__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: 2.5rem clamp(2.5rem, 6vw, 6rem);
+      padding-top: 0;
+    }
+
+    &__email {
+      margin-top: 1.5rem;
+      font-family: var(--primary-family);
+      font-size: clamp(1.5rem, 2.9vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      overflow-wrap: anywhere;
+
+      a {
+        color: var(--light-100);
+        text-decoration: none;
+
+        &:hover {
+          color: var(--brand-primary);
+        }
+      }
+    }
+
+    &__lede {
+      max-width: 40rem;
+      margin-top: 1.25rem;
+      color: color-mix(in srgb, var(--light-100) 78%, transparent);
+      font-size: 1.0625rem;
+      line-height: 1.6;
+    }
+
+    &__status {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      color: color-mix(in srgb, var(--light-100) 75%, transparent);
+      font-size: 0.875rem;
+      line-height: 1.5;
+
+      i {
+        flex: none;
+        width: 8px;
+        height: 8px;
+        margin-top: 0.4em;
+        border-radius: 50%;
+        background: #3ecf6e;
+        box-shadow: 0 0 0 4px rgba(62, 207, 110, 0.18);
+      }
+    }
+
+    &__actions {
+      display: grid;
+      gap: 0.625rem;
+      margin-top: 1.25rem;
+
+      :global(.btn) {
+        justify-content: center;
+      }
+    }
+
+    :global(.contact__linkedin) {
+      margin-top: 1.25rem;
+      color: var(--light-100);
+      font-weight: 500;
+    }
+
+    :global(.contact__linkedin:hover) {
+      color: var(--brand-primary);
+    }
+
+    @media (max-width: 960px) {
+      &__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+</style>

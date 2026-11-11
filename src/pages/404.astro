@@ -1,0 +1,30 @@
+---
+// COMPONENTS
+import Layout from "@/layouts/Layout.astro";
+import Links from "@/components/Links.astro";
+import SimplePage from "@/components/SimplePage.astro";
+
+// DATA
+import { contactHref } from "@/data/navData";
+---
+
+<Layout
+  pageTitle="Page not found | Chris Nervegna"
+  description="That page doesn't exist. Head back to the homepage to see Chris Nervegna's work."
+  noindex
+>
+  <SimplePage
+    bubble="Hmm, that's not a page."
+    title="This one isn't here."
+    lead="The link might be old, or there might be a typo. Either way, the good stuff is back on the homepage."
+  >
+    <div class="btn-wrapper btn-wrapper--left">
+      <Links variant="dark" href="/">
+        Back to the homepage
+      </Links>
+      <Links variant="light" href={contactHref}>
+        Say hi
+      </Links>
+    </div>
+  </SimplePage>
+</Layout>
