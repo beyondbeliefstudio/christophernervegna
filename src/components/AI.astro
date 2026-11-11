@@ -1,6 +1,6 @@
 ---
-// "AI makes me faster. It doesn't make the decisions." Headline on the left, how
-// I work with it on the right, then three tools fanned like cards.
+// "AI makes me faster. It doesn't make the decisions." A centered intro on how I
+// work with it, then three tools fanned like cards.
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
 import SecHead from "@/components/SecHead.astro";
@@ -23,7 +23,8 @@ import { aiProjectsData } from "@/data/homeData";
         id="ai-title"
         bubble="Do you use AI?"
         red
-        title="AI makes me faster. It doesn&rsquo;t make the decisions."
+        center
+        title="AI makes me faster.<br /> It doesn&rsquo;t make the decisions."
       />
       <div class="ai__text">
         <p>
@@ -71,14 +72,15 @@ import { aiProjectsData } from "@/data/homeData";
 <style lang="scss">
   .ai {
     &__intro {
-      display: grid;
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      align-items: end;
-      gap: 2rem clamp(2.5rem, 6vw, 6rem);
+      text-align: center;
+    }
+
+    &__text {
+      max-width: 45rem;
+      margin: 2rem auto 0;
     }
 
     &__text p {
-      max-width: 37.5rem;
       font-size: var(--_typography---font-size--text-large);
       line-height: 1.7;
 
@@ -92,12 +94,6 @@ import { aiProjectsData } from "@/data/homeData";
       margin: 7.5rem auto 0;
       text-align: center;
       line-height: 1.25;
-    }
-
-    @media (max-width: 960px) {
-      &__intro {
-        grid-template-columns: 1fr;
-      }
     }
   }
 
