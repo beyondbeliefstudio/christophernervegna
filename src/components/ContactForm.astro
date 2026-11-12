@@ -1,5 +1,5 @@
 ---
-// Netlify form with a honeypot. Posts to /submit-contact/, the thank-you page.
+// Netlify form with a honeypot and Netlify's reCAPTCHA. Posts to /submit-contact/, the thank-you page.
 // COMPONENTS
 import Buttons from "@/components/Buttons.astro";
 ---
@@ -48,6 +48,11 @@ import Buttons from "@/components/Buttons.astro";
     <textarea id="cf-message" name="message" required></textarea>
   </div>
 
+  <!-- Netlify-managed reCAPTCHA v2, same setup as Quantum Home Cares. Netlify injects
+       the widget at deploy and rejects failed challenges before the submission is
+       stored, so no keys or client code are needed (this form is a plain POST). -->
+  <div class="contact-form__captcha" data-netlify-recaptcha="true"></div>
+
   <div class="btn-wrapper">
     <Buttons variant="primary">Send it</Buttons>
   </div>
@@ -58,5 +63,16 @@ import Buttons from "@/components/Buttons.astro";
     padding: clamp(1.5rem, 3vw, 2.5rem);
     border-radius: var(--border-radius-large);
     background: var(--surface-secondary);
+
+    /* The reCAPTCHA box is a fixed 304px wide; shrink it a touch on the
+       narrowest phones so it never overflows the card. */
+    &__captcha {
+      margin-bottom: 1.25rem;
+
+      @media (max-width: 360px) {
+        transform: scale(0.88);
+        transform-origin: 0 0;
+      }
+    }
   }
 </style>
