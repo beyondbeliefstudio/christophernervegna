@@ -64,7 +64,9 @@ const targetOf = (href: string) => "#" + href.split("#")[1];
     /* One dark floating bar: logo left, sliding links centered, CTA right. */
     &__inner {
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      /* Links sit centered between the logo and the CTA, so the gaps on both
+         sides match even though the logo is wider than the button. */
+      grid-template-columns: auto 1fr auto;
       align-items: center;
       gap: 0.75rem;
       max-width: 53.75rem;

@@ -1,14 +1,15 @@
 // Captures homepage screenshots for the Work section.
 // Usage:  npm run shots          (only projects with no image yet)
 //         npm run shots -- --all (retake every screenshot)
-// Saves 1440x1080 (4:3) JPGs to public/images/work/<id>.jpg and fills in each project's `image` in src/data/work.json.
+// Saves 1440x1080 (4:3) JPGs to src/assets/work/<id>.jpg (Astro optimizes them) and fills in each
+// project's `image` (the file name) in src/data/work.json.
 import { chromium } from "playwright";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 
 const all = process.argv.includes("--all");
 const file = new URL("../src/data/work.json", import.meta.url);
-const outDir = new URL("../public/images/work/", import.meta.url);
+const outDir = new URL("../src/assets/work/", import.meta.url);
 const work = JSON.parse(await readFile(file, "utf8"));
 const slug = s =>
   s
@@ -60,9 +61,9 @@ for (const item of todo) {
     await page.waitForLoadState("load", { timeout: 15000 }).catch(() => {});
     await page.waitForTimeout(4000); // let sliders, fonts and fade-ins settle
     await page.screenshot({ path: new URL(name, outDir).pathname, type: "jpeg", quality: 82 });
-    item.image = `/images/work/${name}`;
+    item.image = name;
     saved++;
-    console.log(`saved public/images/work/${name}`);
+    console.log(`saved src/assets/work/${name}`);
   } catch (e) {
     console.log(`skipped (${e.message.split("\n")[0]})`);
   }
@@ -71,5 +72,5 @@ for (const item of todo) {
 await browser.close();
 await writeFile(file, JSON.stringify(work, null, 2) + "\n");
 console.log(
-  `Done: ${saved} of ${todo.length} saved. Check public/images/work/ for any cookie banners or popups.`
+  `Done: ${saved} of ${todo.length} saved. Check src/assets/work/ for any cookie banners or popups.`
 );

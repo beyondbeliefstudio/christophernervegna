@@ -23,7 +23,7 @@ Chris Nervegna's personal portfolio. Built on the same conventions as the Astro 
 
 ```
 src/
-  assets/photos/   # Photos Astro optimizes (import + <Image>), e.g. chris-hero.jpg
+  assets/          # Images Astro optimizes: photos/ (hero), work/ (4:3 screenshots), ai/, crew/, noise.avif
   components/      # PascalCase .astro sections and primitives
   data/            # siteData.ts, navData.ts, homeData.ts, stickersData.ts, work.json, facts.json, polls.json
   icons/           # SVGs for astro-icon: UI icons, art-* illustrations, sticker-* stickers
@@ -36,7 +36,6 @@ src/
 public/
   favicon.svg, og-image.png (1200x630)
   fonts/           # Self-hosted Funnel Display, Funnel Sans, Geist Mono (latin, variable)
-  images/work/     # Work screenshots (4:3), referenced from work.json
   resume/          # The two resume PDFs
 netlify/functions/ # ask.mjs (chat), poll.mjs (poll tallies)
 scripts/           # capture-work.mjs (npm run shots)
@@ -132,7 +131,7 @@ All of it respects `prefers-reduced-motion`.
 
 ## Content workflows
 
-- **New work example:** add an entry to `work.json` with `"image": ""`, then `npm run shots` (Playwright, 1440×1080). It saves `public/images/work/<id>.jpg` and fills in the path. `npm run shots -- --all` retakes everything. First run: `npx playwright install chromium`.
+- **New work example:** add an entry to `work.json` with `"image": ""`, then `npm run shots` (Playwright, 1440×1080). It saves `src/assets/work/<id>.jpg` and fills in the file name. `npm run shots -- --all` retakes everything. First run: `npx playwright install chromium`.
 - **Real photos:** drop them in `src/assets/photos/`, import in the component and pass to `Photo`. Personal photos for the sticker popups live in `src/assets/crew/`.
 - **AI tool screenshots:** `src/assets/ai/` (1440×900, 16:10), mapped in `AI.astro`.
 - **Poll:** add `<Poll />` to a section to turn it back on.

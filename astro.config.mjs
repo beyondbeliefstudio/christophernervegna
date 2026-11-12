@@ -24,6 +24,10 @@ export default defineConfig({
     // Source comments stay in the .astro files; they just do not ship.
     stripHtmlComments(),
   ],
+  // Inline the small CSS files so they don't block the first paint.
+  build: {
+    inlineStylesheets: "always",
+  },
   vite: {
     build: {
       assetsInlineLimit: 0,

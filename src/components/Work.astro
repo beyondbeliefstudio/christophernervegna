@@ -4,6 +4,8 @@
 // Both interactions live in app.js: initListGridToggle and initWorkFilters.
 // COMPONENTS
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import SecHead from "@/components/SecHead.astro";
 
 // HELPERS
@@ -11,6 +13,13 @@ import { getCollection } from "astro:content";
 
 // DATA
 import workOrder from "@/data/work.json";
+
+// Screenshots live in src/assets/work/ so Astro resizes them and serves WebP.
+// work.json stores just the file name.
+const shots = import.meta.glob<{ default: ImageMetadata }>("/src/assets/work/*.{jpg,png}", {
+  eager: true,
+});
+const shotFor = (name: string) => shots[`/src/assets/work/${name}`]?.default;
 
 // The collection loader sorts by id; keep the order the JSON file is written in.
 const order = workOrder.map(item => item.id);
@@ -83,14 +92,14 @@ const filters = [
               class="list-grid__link"
             >
               <div data-list-grid-flip class="list-grid__media">
-                {w.image ? (
-                  <img
-                    src={w.image}
-                    loading="lazy"
+                {shotFor(w.image) ? (
+                  <Image
+                    src={shotFor(w.image)!}
                     alt={`${w.name} homepage`}
                     class="list-grid__image"
-                    width="800"
-                    height="600"
+                    widths={[320, 480, 720, 960]}
+                    sizes="(max-width: 767px) 92vw, (max-width: 1100px) 46vw, 30vw"
+                    loading="lazy"
                   />
                 ) : (
                   <span class="list-grid__ph">Screenshot coming</span>
@@ -143,7 +152,7 @@ const filters = [
         margin-left: 4px;
         font-family: var(--tertiary-family);
         font-size: 0.75rem;
-        opacity: 0.7;
+        opacity: 1;
       }
 
       &:hover {

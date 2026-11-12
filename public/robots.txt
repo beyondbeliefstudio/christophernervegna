@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://christophernervegna.com/sitemap-index.xml

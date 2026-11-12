@@ -140,6 +140,12 @@ import { aiProjectsData } from "@/data/homeData";
       opacity: 0.75;
     }
 
+    /* White on Campari only just passes contrast, so no fading there. */
+    &__card--red .fan__tag,
+    &__card--red .fan__stack {
+      opacity: 1;
+    }
+
     :global(.fan__title) {
       margin-top: 0.625rem;
     }

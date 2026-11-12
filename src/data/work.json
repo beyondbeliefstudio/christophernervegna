@@ -5,7 +5,7 @@
     "what": "A senior home care agency in New Jersey. I handled the strategy, design and hand-coded build, including a lead form that feeds straight into their CRM.",
     "where": "Beyond Belief",
     "url": "https://quantumhomecares.net/",
-    "image": "/images/work/quantum-home-cares.jpg"
+    "image": "quantum-home-cares.jpg"
   },
   {
     "id": "beyond-belief-web-design",
@@ -13,7 +13,7 @@
     "what": "My own web design studio. Hand-coded in Astro and written to talk local business owners out of a template.",
     "where": "Beyond Belief",
     "url": "https://beyondbeliefwebdesign.com/",
-    "image": "/images/work/beyond-belief-web-design.jpg"
+    "image": "beyond-belief-web-design.jpg"
   },
   {
     "id": "lex-yard",
@@ -21,7 +21,7 @@
     "what": "Chef Michael Anthony’s American restaurant inside the Waldorf Astoria New York.",
     "where": "BentoBox",
     "url": "https://www.lexyardnyc.com/",
-    "image": "/images/work/lex-yard.jpg"
+    "image": "lex-yard.jpg"
   },
   {
     "id": "roccos-sports-and-rec",
@@ -29,7 +29,7 @@
     "what": "A sports bar with locations in New York, Boston and West Palm Beach, and personality to spare.",
     "where": "BentoBox",
     "url": "https://v2-gotoroccos.getbento.com/",
-    "image": "/images/work/roccos-sports-rec.jpg"
+    "image": "roccos-sports-rec.jpg"
   },
   {
     "id": "create-catering",
@@ -37,7 +37,7 @@
     "what": "Chef-led catering in Minneapolis. I designed it working directly with the owners.",
     "where": "BentoBox",
     "url": "https://v4-createcaters.getbento.com/",
-    "image": "/images/work/create-catering.jpg"
+    "image": "create-catering.jpg"
   },
   {
     "id": "brasero-chicago",
@@ -45,7 +45,7 @@
     "what": "A South American restaurant in Chicago, designed hand in hand with the client.",
     "where": "BentoBox",
     "url": "https://v2-braserochicago.getbento.com/",
-    "image": "/images/work/brasero-chicago.jpg"
+    "image": "brasero-chicago.jpg"
   },
   {
     "id": "saikindo",
@@ -53,7 +53,7 @@
     "what": "A Hi-Fi bar and yakitori grill in Abu Dhabi built around skewers, cocktails and vinyl. The original mockup had a working DJ turntable; the site kept the vibe instead.",
     "where": "BentoBox",
     "url": "https://www.saikindo.com/",
-    "image": "/images/work/saikindo.jpg"
+    "image": "saikindo.jpg"
   },
   {
     "id": "beyond-belief-print-shop",
@@ -61,7 +61,7 @@
     "what": "The screen printing shop I ran on the side from 2016 until January 2026, with a catalog, quotes and a blog.",
     "where": "Beyond Belief",
     "url": "https://beyondbeliefprintshop.com/",
-    "image": "/images/work/beyond-belief-print-shop.jpg"
+    "image": "beyond-belief-print-shop.jpg"
   },
   {
     "id": "fd-cigar-co",
@@ -69,7 +69,7 @@
     "what": "A firefighter-owned cigar lounge and whiskey bar in Waxhaw, NC. I was a regular before I was their web designer.",
     "where": "Beyond Belief",
     "url": "https://fdcigarcompany.com/",
-    "image": "/images/work/fd-cigar-co.jpg"
+    "image": "fd-cigar-co.jpg"
   },
   {
     "id": "mildreds",
@@ -77,7 +77,7 @@
     "what": "London’s original plant-based restaurant group, cooking since 1988.",
     "where": "BentoBox",
     "url": "https://www.mildreds.com/",
-    "image": "/images/work/mildreds.jpg"
+    "image": "mildreds.jpg"
   },
   {
     "id": "the-garden-state",
@@ -85,7 +85,7 @@
     "what": "An events calendar for a New Jersey podcast run by good friends of mine. Hand-coded in Astro.",
     "where": "Beyond Belief",
     "url": "https://thegardenstate.events",
-    "image": "/images/work/the-garden-state.jpg"
+    "image": "the-garden-state.jpg"
   },
   {
     "id": "maria-isabel",
@@ -93,6 +93,6 @@
     "what": "A modern Mexican bistro in San Francisco with a Californian accent.",
     "where": "BentoBox",
     "url": "https://www.mariaisabelsf.com/",
-    "image": "/images/work/maria-isabel.jpg"
+    "image": "maria-isabel.jpg"
   }
 ]
