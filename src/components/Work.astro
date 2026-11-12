@@ -81,7 +81,6 @@ const filters = [
               target={w.url ? "_blank" : undefined}
               rel={w.url ? "noopener" : undefined}
               class="list-grid__link"
-              title={w.what}
             >
               <div data-list-grid-flip class="list-grid__media">
                 {w.image ? (
@@ -100,10 +99,10 @@ const filters = [
               <p data-list-grid-fade class="list-grid__title">
                 {w.name}
               </p>
-              <p data-list-grid-fade class="list-grid__category">
-                {w.category}
+              <p data-list-grid-fade class="list-grid__desc">
+                {w.what}
               </p>
-              <p data-list-grid-fade class="list-grid__year">
+              <p data-list-grid-fade class="list-grid__where">
                 {w.where}
               </p>
               <span data-list-grid-fade class="list-grid__arrow" aria-hidden="true">
@@ -238,10 +237,14 @@ const filters = [
 
     &__link {
       display: grid;
-      grid-template-columns: var(--list-grid-thumb) minmax(0, 2fr) auto auto auto;
-      grid-template-areas: "media title category year arrow";
+      grid-template-columns: var(--list-grid-thumb) minmax(0, 1fr) auto auto;
+      grid-template-areas:
+        "media title where arrow"
+        "media desc where arrow";
+      grid-template-rows: 1fr 1fr;
       align-items: center;
       column-gap: 1.25em;
+      row-gap: 4px;
       padding: 10px 14px 10px 10px;
       color: var(--content-primary);
       text-decoration: none;
@@ -303,6 +306,7 @@ const filters = [
 
     &__title {
       grid-area: title;
+      align-self: end;
       justify-self: start;
       max-width: 100%;
       padding-left: 6px;
@@ -317,25 +321,25 @@ const filters = [
       transition: color 0.3s;
     }
 
-    &__category,
-    &__year {
+    &__desc {
+      grid-area: desc;
+      align-self: start;
+      max-width: 40rem;
+      padding-left: 6px;
+      color: var(--content-secondary);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    &__where {
+      grid-area: where;
+      justify-self: end;
       padding: 7px 12px;
       border-radius: 100em;
+      color: var(--content-secondary);
       font-size: 0.8125rem;
       line-height: 1;
       white-space: nowrap;
-    }
-
-    &__category {
-      grid-area: category;
-      justify-self: start;
-      background-color: var(--surface-primary);
-    }
-
-    &__year {
-      grid-area: year;
-      justify-self: end;
-      color: var(--content-secondary);
       box-shadow: inset 0 0 0 1px var(--border-color);
     }
 
@@ -371,11 +375,14 @@ const filters = [
       }
 
       .list-grid__link {
-        grid-template-columns: auto minmax(0, 1fr) auto;
+        grid-template-columns: minmax(0, 1fr) auto;
         grid-template-areas:
-          "media media media"
-          "title title arrow"
-          "category year arrow";
+          "media media"
+          "title arrow"
+          "desc desc"
+          "where where";
+        grid-template-rows: auto auto 1fr auto;
+        height: 100%;
         column-gap: 8px;
         row-gap: 10px;
         padding: 12px 12px 18px;
@@ -387,12 +394,17 @@ const filters = [
         border-radius: 1rem;
       }
 
-      .list-grid__category {
-        margin-left: 6px;
+      .list-grid__title {
+        align-self: center;
       }
 
-      .list-grid__year {
+      .list-grid__desc {
+        align-self: start;
+      }
+
+      .list-grid__where {
         justify-self: start;
+        margin: 4px 0 0 6px;
       }
     }
 
@@ -408,12 +420,20 @@ const filters = [
         grid-template-columns: var(--list-grid-thumb) minmax(0, 1fr) auto;
         grid-template-areas:
           "media title arrow"
-          "media category arrow";
+          "media desc arrow"
+          "media where arrow";
+        grid-template-rows: auto;
+        align-items: start;
         row-gap: 6px;
       }
 
-      &__year {
-        display: none;
+      &__where {
+        justify-self: start;
+        margin-left: 6px;
+      }
+
+      &__desc {
+        font-size: 0.875rem;
       }
 
       &__title {

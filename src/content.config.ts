@@ -11,7 +11,6 @@ const work = defineCollection({
     where: z.enum(["BentoBox", "Beyond Belief"]),
     url: z.string(),
     image: z.string(),
-    category: z.string(),
   }),
 });
 
