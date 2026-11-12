@@ -20,7 +20,7 @@ import { chaptersData, perfectDayData } from "@/data/homeData";
       sub="A design degree, a decade-plus of web design experience, and my own studio on the side."
     />
 
-    <ol class="story__chapters">
+    <ol class="story__chapters" data-reveal="stagger">
       {chaptersData.map(c => (
         <li class:list={["chapter", { "chapter--now": c.current }]}>
           <span class="chapter__when">{c.when}</span>
@@ -43,7 +43,7 @@ import { chaptersData, perfectDayData } from "@/data/homeData";
       ))}
     </ol>
 
-    <div class="story__day">
+    <div class="story__day" data-reveal="up">
       <span class="story__day-label">A perfect day</span>
       <ol class="story__day-list">
         {perfectDayData.map(item => (

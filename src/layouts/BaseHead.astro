@@ -99,6 +99,14 @@ const person = {
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(person)} />
+  <!-- Reveal animations: hide [data-reveal] before first paint so nothing flashes.
+       Skipped for reduced motion; a 4s failsafe shows everything if app.js never runs. -->
+  <script is:inline>
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.documentElement.classList.add("is-reveal");
+      setTimeout(() => document.documentElement.classList.add("reveal-ready"), 4000);
+    }
+  </script>
   <script src="@/js/app.js"></script>
 
   <Analytics measurementId={GA_MEASUREMENT_ID} />

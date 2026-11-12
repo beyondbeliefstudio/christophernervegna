@@ -11,22 +11,32 @@ import { contactHref } from "@/data/navData";
 import heroPortrait from "@/assets/photos/chris-hero.jpg";
 ---
 
-<header id="top" class="hero" data-progress-nav-anchor>
+<header id="top" class="hero" data-progress-nav-anchor data-reveal-onload>
   <!-- Interactive dot grid (initHeroDots in app.js). Faint on purpose. -->
   <div class="hero-dots" data-dots-container-init aria-hidden="true"></div>
 
   <div class="container container-md hero__grid">
     <div class="hero__text">
-      <Heading tag="h1" size="display" class="hero__title">
+      <Heading
+        tag="h1"
+        size="display"
+        class="hero__title"
+        data-reveal="lines"
+        data-reveal-delay="0.15"
+      >
         I&rsquo;m Chris. I design websites, build them, and{" "}
         <span class="hero__mark">explain them to anyone in the room.</span>
       </Heading>
-      <p class="hero__lede">
+      <p class="hero__lede" data-reveal="up" data-reveal-delay="0.55">
         Ten years, well over a hundred websites. I design and develop on any platform, or hand-code
         from a blank file. I also scope what clients need, walk them through the platform and answer
         the technical questions on&nbsp;the&nbsp;call.
       </p>
-      <div class="btn-wrapper btn-wrapper--left hero__actions">
+      <div
+        class="btn-wrapper btn-wrapper--left hero__actions"
+        data-reveal="stagger"
+        data-reveal-delay="0.7"
+      >
         <Links variant="dark" href="#work">
           See the work
         </Links>
@@ -36,7 +46,7 @@ import heroPortrait from "@/assets/photos/chris-hero.jpg";
       </div>
     </div>
 
-    <div class="hero__media">
+    <div class="hero__media" data-reveal="media" data-reveal-delay="0.3">
       <div class="hero__panel" aria-hidden="true"></div>
       <Photo
         class="hero__photo"

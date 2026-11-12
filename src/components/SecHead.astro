@@ -20,12 +20,16 @@ const { id, title, bubble, sub, red = false, dark = false, center = false } = As
 
 <div class:list={["sec-head", { "sec-head--dark": dark, "sec-head--center": center }]}>
   {bubble && (
-    <span class:list={["bubble sec-head__bubble", { "bubble--red": red }]} set:html={bubble} />
+    <span
+      class:list={["bubble sec-head__bubble", { "bubble--red": red }]}
+      data-reveal="pop"
+      set:html={bubble}
+    />
   )}
-  <Heading tag="h2" size="xxl" id={id} class="sec-head__title">
+  <Heading tag="h2" size="xxl" id={id} class="sec-head__title" data-reveal="lines">
     <Fragment set:html={title} />
   </Heading>
-  {sub && <p class="sec-head__sub" set:html={sub} />}
+  {sub && <p class="sec-head__sub" data-reveal="up" set:html={sub} />}
 </div>
 
 <style lang="scss">

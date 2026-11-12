@@ -26,7 +26,7 @@ import { aiProjectsData } from "@/data/homeData";
         center
         title="AI makes me faster.<br /> It doesn&rsquo;t make the decisions."
       />
-      <div class="ai__text">
+      <div class="ai__text" data-reveal="up">
         <p>
           The heavy lifting happens up front. Before an agent builds anything, I&rsquo;ve set up the
           design system and the components it can use, and written down how I work: how I name
@@ -40,12 +40,12 @@ import { aiProjectsData } from "@/data/homeData";
       </div>
     </div>
 
-    <Heading tag="h3" size="m" weight="fw600" class="ai__lead">
+    <Heading tag="h3" size="m" weight="fw600" class="ai__lead" data-reveal="lines">
       I also reach for it when something at work or at home needs a tool that doesn&rsquo;t exist
       yet.
     </Heading>
 
-    <div class="fan">
+    <div class="fan" data-reveal="stagger">
       {aiProjectsData.map(p => (
         <article class:list={["fan__card", `fan__card--${p.tone}`]}>
           <p class="fan__tag">{p.tag}</p>

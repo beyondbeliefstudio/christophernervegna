@@ -39,7 +39,7 @@ const filters = [
     />
 
     <div class="list-grid" data-list-grid-view="grid" data-list-grid-init>
-      <div class="list-grid__bar">
+      <div class="list-grid__bar" data-reveal="up">
         <div class="filters" role="group" aria-label="Filter work">
           {filters.map((f, i) => (
             <button
@@ -73,7 +73,7 @@ const filters = [
         </div>
       </div>
 
-      <div class="list-grid__list" role="list">
+      <div class="list-grid__list" role="list" data-reveal="stagger">
         {work.map(w => (
           <div role="listitem" class="list-grid__item" data-where={w.where}>
             <a

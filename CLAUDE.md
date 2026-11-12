@@ -121,9 +121,12 @@ One global file, `src/styles/global.scss`, imported once in `Layout.astro`: font
 
 Single entry point, loaded from `BaseHead.astro`. Every init function guards on its own markup:
 
-`initProgressNav` · `initHeroDots` (Osmo Glowing Dots Grid, `opacity .3`) · `initScrollerAnimations` · `initListGridToggle` (Osmo List/Grid Flip) · `initWorkFilters` (Flip + height tween so the page doesn't jump) · `initStickers` (drag + modal; data-* on each sticker) · `initChat` (Netlify function + local fallback answers) · `initPoll`
+`initReveals` · `initProgressNav` · `initHeroDots` (Osmo Glowing Dots Grid, `opacity .3`) · `initScrollerAnimations` · `initListGridToggle` (Osmo List/Grid Flip) · `initWorkFilters` (Flip + height tween so the page doesn't jump) · `initStickers` (drag + modal; data-* on each sticker) · `initChat` (Netlify function + local fallback answers) · `initPoll`
 
 All of it respects `prefers-reduced-motion`.
+
+**Reveals.** Every entrance on the site runs through `initReveals`. Mark an element with `data-reveal="<type>"`:
+`lines` (headings rise line by line out of a SplitText mask), `up`, `stagger` (children one after another), `pop` (speech bubbles), `media` (images), `sticker`, `fade`, `drop` (the nav). `SecHead` already marks its bubble, title and sub, so a new section reveals for free. Inside `[data-reveal-onload]` (the hero) elements play on load, timed by `data-reveal-delay`; everything else plays once at `top 88%` (override with `data-reveal-start`). An inline script in `BaseHead` hides `[data-reveal]` before first paint (skipped for reduced motion, with a 4s failsafe). Tweens clear their transforms when done, so CSS tilts and hovers take back over. Never put a `data-reveal` inside a `stagger` parent.
 
 ---
 

@@ -2,8 +2,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Flip } from "gsap/Flip";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
+import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger, Flip, InertiaPlugin);
+gsap.registerPlugin(ScrollTrigger, Flip, InertiaPlugin, SplitText);
 
 const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -13,6 +14,7 @@ const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)")
 // (the legal pages, the thank-you page) just skip it.
 // ==========================================
 window.addEventListener("DOMContentLoaded", () => {
+  initReveals();
   initProgressNav();
   initHeroDots();
   initScrollerAnimations();
@@ -22,6 +24,170 @@ window.addEventListener("DOMContentLoaded", () => {
   initChat();
   initPoll();
 });
+
+// ==========================================
+// REVEALS
+// One system for every entrance on the site. Mark an element with
+// data-reveal="<type>" and it animates in once, as it scrolls into view:
+//   lines    headings rise line by line out of a mask (SplitText)
+//   up       fades up a short distance
+//   stagger  its children fade up one after another
+//   pop      speech bubbles: a small springy scale-in
+//   media    images: rise, settle from a slight scale
+//   sticker  the sticker art spins and springs in
+//   fade     opacity only
+//   drop     the nav: slides down into place
+// Inside [data-reveal-onload] (the hero) elements play on page load instead,
+// timed by data-reveal-delay. Things that enter together are staggered, and
+// data-reveal-start overrides the scroll point (default "top 88%").
+// Every tween clears its transform at the end, so the CSS (tilts, hovers,
+// breakpoints) takes back over. Reduced motion skips all of it.
+// ==========================================
+function initReveals() {
+  const root = document.documentElement;
+  const all = [...document.querySelectorAll("[data-reveal]")];
+  if (!all.length || !root.classList.contains("is-reveal") || reduceMotion()) {
+    root.classList.add("reveal-ready");
+    return;
+  }
+
+  const ease = "expo.out";
+  // Hide with inline styles, then hand off from the pre-paint CSS rule.
+  gsap.set(all, { autoAlpha: 0 });
+  root.classList.add("reveal-ready");
+
+  const show = el => gsap.set(el, { autoAlpha: 1 });
+
+  const types = {
+    lines(el, delay) {
+      const split = SplitText.create(el, { type: "lines", mask: "lines" });
+      show(el);
+      gsap.from(split.lines, {
+        yPercent: 110,
+        duration: 1.25,
+        ease,
+        stagger: 0.09,
+        delay,
+        onComplete: () => split.revert(),
+      });
+    },
+    up(el, delay) {
+      gsap.to(el, { autoAlpha: 1, duration: 1, ease: "power2.out", delay });
+      gsap.from(el, { y: "+=36", duration: 1.2, ease, delay, clearProps: "transform" });
+    },
+    stagger(el, delay) {
+      const kids = [...el.children];
+      show(el);
+      gsap.fromTo(
+        kids,
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 1, ease: "power2.out", stagger: 0.1, delay }
+      );
+      gsap.from(kids, {
+        y: "+=48",
+        duration: 1.3,
+        ease,
+        stagger: 0.1,
+        delay,
+        clearProps: "transform",
+      });
+    },
+    pop(el, delay) {
+      gsap.to(el, { autoAlpha: 1, duration: 0.4, ease: "power1.out", delay });
+      gsap.from(el, {
+        scale: 0.6,
+        y: "+=12",
+        transformOrigin: "0% 100%",
+        duration: 0.9,
+        ease: "back.out(2.2)",
+        delay,
+        clearProps: "transform,transformOrigin",
+      });
+    },
+    media(el, delay) {
+      gsap.to(el, { autoAlpha: 1, duration: 1.1, ease: "power2.out", delay });
+      gsap.from(el, {
+        y: "+=60",
+        scale: 0.96,
+        duration: 1.6,
+        ease,
+        delay,
+        clearProps: "transform",
+      });
+    },
+    sticker(el, delay) {
+      const art = el.querySelector("svg");
+      show(el);
+      if (!art) return;
+      gsap.from(art, {
+        autoAlpha: 0,
+        scale: 0.3,
+        rotation: gsap.utils.random(-35, 35),
+        duration: 1,
+        ease: "back.out(1.7)",
+        delay,
+        clearProps: "all",
+      });
+    },
+    fade(el, delay) {
+      gsap.to(el, { autoAlpha: 1, duration: 1.2, ease: "power2.out", delay });
+    },
+    drop(el, delay) {
+      gsap.to(el, { autoAlpha: 1, duration: 0.8, ease: "power2.out", delay });
+      gsap.from(el, { y: "-=24", duration: 1.2, ease, delay, clearProps: "transform" });
+    },
+  };
+
+  const play = (el, delay = 0) => (types[el.dataset.reveal] || types.up)(el, delay);
+  const onload = el => el.closest("[data-reveal-onload]") || el.dataset.reveal === "drop";
+
+  // Wait for the fonts so SplitText measures real line breaks.
+  document.fonts.ready.then(() => {
+    all.filter(onload).forEach(el => play(el, parseFloat(el.dataset.revealDelay) || 0));
+
+    const scrolled = all.filter(el => !onload(el));
+    ScrollTrigger.batch(
+      scrolled.filter(el => !el.dataset.revealStart),
+      {
+        start: "top 88%",
+        once: true,
+        onEnter: batch => {
+          // A fast jump (nav link, scrollbar drag) can enter a lot at once.
+          // Anything already scrolled past just appears; what's on screen
+          // plays, with the stagger capped so nothing waits long.
+          let i = 0;
+          batch.forEach(el => {
+            if (el.getBoundingClientRect().bottom < 0) show(el);
+            else play(el, Math.min(i++, 5) * 0.12);
+          });
+        },
+      }
+    );
+    // The Work filters, the list/grid toggle and late images all change the
+    // page height; re-measure the triggers whenever it does.
+    let refreshTimer;
+    let lastHeight = document.body.scrollHeight;
+    new ResizeObserver(() => {
+      if (Math.abs(document.body.scrollHeight - lastHeight) < 2) return;
+      lastHeight = document.body.scrollHeight;
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+    }).observe(document.body);
+
+    // A custom start (data-reveal-start), e.g. the footer, which sits too
+    // close to the bottom of the page to ever reach 88%.
+    scrolled
+      .filter(el => el.dataset.revealStart)
+      .forEach(el => {
+        ScrollTrigger.create({
+          trigger: el,
+          start: el.dataset.revealStart,
+          once: true,
+          onEnter: () => play(el),
+        });
+      });
+  });
+}
 
 // ==========================================
 // PROGRESS NAV

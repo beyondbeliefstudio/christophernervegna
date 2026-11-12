@@ -20,7 +20,7 @@ import { notesData } from "@/data/homeData";
     />
 
     <div class="withme">
-      <article class="withme__story">
+      <article class="withme__story" data-reveal="up">
         <div class="sticker-art withme__art">
           <Icon name="art-mockup" aria-hidden="true" />
         </div>
@@ -40,7 +40,7 @@ import { notesData } from "@/data/homeData";
         </p>
       </article>
 
-      <ul class="withme__notes">
+      <ul class="withme__notes" data-reveal="stagger">
         {notesData.map(note => (
           <li class="card withme__note">
             <Heading tag="h3" size="xs">
@@ -52,7 +52,7 @@ import { notesData } from "@/data/homeData";
       </ul>
     </div>
 
-    <Heading tag="p" size="l" weight="fw600" class="withme__closer">
+    <Heading tag="p" size="l" weight="fw600" class="withme__closer" data-reveal="lines">
       So whether the room needs a designer, a developer, or someone to demo the product and answer
       the hard questions, I&rsquo;ve sat in that chair.
     </Heading>

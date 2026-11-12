@@ -24,19 +24,26 @@ const stickers = await Promise.all(
     <div class="stickers">
       <div class="stickers__board" data-board>
         <div class="stickers__center">
-          <span class="bubble bubble--red stickers__bubble">
+          <span class="bubble bubble--red stickers__bubble" data-reveal="pop">
             And when you&rsquo;re not working?
           </span>
-          <Heading tag="h2" size="xxl" id="offclock-title" class="stickers__title">
+          <Heading
+            tag="h2"
+            size="xxl"
+            id="offclock-title"
+            class="stickers__title"
+            data-reveal="lines"
+          >
             The stuff that isn&rsquo;t on my resume.
           </Heading>
-          <p>Drag them around. Click one and I&rsquo;ll tell you more.</p>
+          <p data-reveal="up">Drag them around. Click one and I&rsquo;ll tell you more.</p>
         </div>
         {stickers.map(s => (
           <button
             class="sticker"
             type="button"
             data-sticker
+            data-reveal="sticker"
             data-x={s.x}
             data-y={s.y}
             data-kicker={s.kicker}
