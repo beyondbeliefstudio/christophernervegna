@@ -60,7 +60,7 @@ Path aliases (tsconfig): `@/*` → `src/*`, `@/ui/*` → `src/components/ui/*`. 
 
 - `BaseHead.astro`: the whole `<head>`. Takes `pageTitle`, `description`, `noindex`. Canonical, OG/Twitter, font preloads, Person schema, `app.js`, Analytics + Ahrefs. `PUBLIC_NOINDEX=true` noindexes a whole deploy.
 - `Layout.astro`: BaseHead → skip link → `.page` (Nav, `<main id="main">`, Footer) → Chat → UserBack. `hideChat` hides the chat (legal and thank-you pages).
-- `Nav.astro`: Osmo "One Page Progress Navigation" restyled as one dark floating bar (logo left, sliding links centered, red "Say hi" right). Reads `navData`.
+- `Nav.astro`: Osmo "One Page Progress Navigation" restyled as one dark floating bar (logo left, sliding links centered, red "Say hi" right). Reads `navData`. Under 861px the links hide and a menu button grows the bar into a sheet of section links, each with its section's bubble question (`ask` in navData) and a red dot on the current one (`initMobileMenu`). Under 375px "Say hi" moves into the sheet.
 - `Footer.astro`: one compact row under the contact band: section links from `navData` on the left, copyright (auto year) and `legalNav` on the right.
 
 Every page passes a unique `pageTitle` (`Page | Chris Nervegna`) and `description` to `<Layout>`.

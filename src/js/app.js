@@ -16,6 +16,7 @@ const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)")
 window.addEventListener("DOMContentLoaded", () => {
   initReveals();
   initProgressNav();
+  initMobileMenu();
   initHeroDots();
   initScrollerAnimations();
   initListGridToggle();
@@ -242,6 +243,10 @@ function initProgressNav() {
       }
     });
     moveIndicator(link);
+    // The mobile menu marks the same section with a dot.
+    document.querySelectorAll("[data-menu-target]").forEach(el => {
+      el.classList.toggle("is--active", el.dataset.menuTarget === `#${id}`);
+    });
     // Over the contact band, ring the "Say hi" button as the current item.
     nav?.classList.toggle("is--on-red", id === "reach");
   }
@@ -257,6 +262,71 @@ function initProgressNav() {
   });
 
   window.addEventListener("resize", () => current && moveIndicator(current));
+}
+
+// ==========================================
+// MOBILE MENU
+// On phones the floating bar's menu button grows the bar into a sheet of
+// section links. Closes on a link tap, Escape, or a tap outside; focus goes
+// back to the button. Reduced motion opens and closes without the tween.
+// ==========================================
+function initMobileMenu() {
+  const toggle = document.querySelector("[data-menu-toggle]");
+  const sheet = document.querySelector("[data-menu-sheet]");
+  if (!toggle || !sheet) return;
+
+  const label = toggle.querySelector("[data-menu-label]");
+  const items = sheet.querySelectorAll("li, .progress-nav__sheet-cta");
+  let isOpen = false;
+  let tl;
+
+  function open() {
+    isOpen = true;
+    toggle.setAttribute("aria-expanded", "true");
+    label.textContent = "Close menu";
+    sheet.hidden = false;
+    tl?.kill();
+    if (reduceMotion()) return;
+    tl = gsap
+      .timeline()
+      .fromTo(sheet, { height: 0 }, { height: "auto", duration: 0.7, ease: "expo.out" })
+      .fromTo(
+        items,
+        { autoAlpha: 0, y: 14 },
+        { autoAlpha: 1, y: 0, duration: 0.6, ease: "expo.out", stagger: 0.04, clearProps: "all" },
+        0.08
+      );
+  }
+
+  function close({ focus = false } = {}) {
+    if (!isOpen) return;
+    isOpen = false;
+    toggle.setAttribute("aria-expanded", "false");
+    label.textContent = "Open menu";
+    if (focus) toggle.focus();
+    tl?.kill();
+    const done = () => {
+      sheet.hidden = true;
+      gsap.set(sheet, { clearProps: "height" });
+    };
+    if (reduceMotion()) return done();
+    tl = gsap.to(sheet, { height: 0, duration: 0.45, ease: "expo.inOut", onComplete: done });
+  }
+
+  toggle.addEventListener("click", () => (isOpen ? close() : open()));
+  sheet.addEventListener("click", e => {
+    if (e.target.closest("a")) close();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && isOpen) close({ focus: true });
+  });
+  document.addEventListener("click", e => {
+    if (isOpen && !e.target.closest(".progress-nav__inner")) close();
+  });
+  // Rotating to a wider screen hides the menu; make sure it isn't left open.
+  window.matchMedia("(min-width: 861px)").addEventListener("change", e => {
+    if (e.matches) close();
+  });
 }
 
 // ==========================================
