@@ -12,7 +12,7 @@ export const trioData = [
   {
     title: "I build it",
     icon: "art-build",
-    text: "Then I build it myself, so nothing gets lost between the mockup and the real thing. That can be on Webflow, WordPress or whatever platform your team already uses. Given the choice, I&rsquo;ll write it by hand in HTML, CSS and JavaScript.",
+    text: "Then I build it myself, usually straight from idea to code, so nothing gets lost in a handoff. That can be on Webflow, WordPress or whatever platform your team already uses. Given the choice, I&rsquo;ll write it by hand in HTML, CSS and JavaScript.",
   },
   {
     title: "I explain it",
@@ -147,7 +147,7 @@ export const perfectDayData = [
   {
     time: "10:30 am",
     title: "Design and build",
-    text: "Heads down. Mockup first, then the real thing in code, on their platform or by hand.",
+    text: "Heads down. I nail the copy with AI&rsquo;s help, rough out how the site flows, then build it straight in code with their brand guide. No brand guide? I&rsquo;ll make one.",
   },
   {
     time: "4:30 pm",
