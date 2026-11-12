@@ -357,18 +357,13 @@ const stickers = await Promise.all(
       line-height: 1.6;
     }
 
-    /* The second line reads like a note pinned on: offset ink shadow, slight tilt. */
+    /* The second line reads as an aside: same text, in italics. */
     &__extra {
-      margin-top: 1.5rem;
-      padding: 1rem 1.25rem;
-      border: var(--border-width) solid var(--dark-900);
-      border-radius: 1rem;
-      background: var(--light-200);
-      box-shadow: var(--shadow-offset);
-      font-size: 1rem;
-      font-weight: 500;
-      line-height: 1.5;
-      transform: rotate(1deg);
+      margin-top: 0.75rem;
+      color: var(--content-secondary);
+      font-size: 1.125rem;
+      font-style: italic;
+      line-height: 1.6;
     }
 
     @media (prefers-reduced-motion: reduce) {
