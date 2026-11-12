@@ -1,4 +1,7 @@
 ---
+// Google analytics, driven by PUBLIC_GA_MEASUREMENT_ID. Silent in dev and when unset.
+// A "GTM-" id loads Google Tag Manager (GA4 and any other tags are managed in
+// the GTM container); a "G-" id loads GA4 directly with gtag.js.
 // PROPS
 export interface AnalyticsProps {
   measurementId?: string;
@@ -6,9 +9,23 @@ export interface AnalyticsProps {
 
 const { measurementId } = Astro.props;
 const isDev = import.meta.env.DEV;
+const isGtm = measurementId?.startsWith("GTM-");
 ---
 
-{!isDev && measurementId && (
+{!isDev && measurementId && isGtm && <script is:inline define:vars={{ measurementId }}>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", measurementId);
+</script>}
+
+{!isDev && measurementId && !isGtm && (
   <>
     <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`} />
     <script is:inline define:vars={{ measurementId }}>
