@@ -57,6 +57,10 @@ function initReveals() {
   root.classList.add("reveal-ready");
 
   const show = el => gsap.set(el, { autoAlpha: 1 });
+  // CSS transitions on transform (button hovers, stickers, thumbnails) would make
+  // an element trail the tween and then glide into place after it ends. Switch
+  // them off while a reveal runs; clearProps hands them back at the end.
+  const still = targets => gsap.set(targets, { transition: "none" });
 
   const types = {
     lines(el, delay) {
@@ -72,12 +76,14 @@ function initReveals() {
       });
     },
     up(el, delay) {
+      still(el);
       gsap.to(el, { autoAlpha: 1, duration: 1, ease: "power2.out", delay });
-      gsap.from(el, { y: "+=36", duration: 1.2, ease, delay, clearProps: "transform" });
+      gsap.from(el, { y: "+=36", duration: 1.2, ease, delay, clearProps: "transform,transition" });
     },
     stagger(el, delay) {
       const kids = [...el.children];
       show(el);
+      still(kids);
       gsap.fromTo(
         kids,
         { autoAlpha: 0 },
@@ -89,10 +95,11 @@ function initReveals() {
         ease,
         stagger: 0.1,
         delay,
-        clearProps: "transform",
+        clearProps: "transform,transition",
       });
     },
     pop(el, delay) {
+      still(el);
       gsap.to(el, { autoAlpha: 1, duration: 0.4, ease: "power1.out", delay });
       gsap.from(el, {
         scale: 0.6,
@@ -101,10 +108,11 @@ function initReveals() {
         duration: 0.9,
         ease: "back.out(2.2)",
         delay,
-        clearProps: "transform,transformOrigin",
+        clearProps: "transform,transformOrigin,transition",
       });
     },
     media(el, delay) {
+      still(el);
       gsap.to(el, { autoAlpha: 1, duration: 1.1, ease: "power2.out", delay });
       gsap.from(el, {
         y: "+=60",
@@ -112,13 +120,14 @@ function initReveals() {
         duration: 1.6,
         ease,
         delay,
-        clearProps: "transform",
+        clearProps: "transform,transition",
       });
     },
     sticker(el, delay) {
       const art = el.querySelector("svg");
       show(el);
       if (!art) return;
+      still(art);
       gsap.from(art, {
         autoAlpha: 0,
         scale: 0.3,
@@ -133,8 +142,9 @@ function initReveals() {
       gsap.to(el, { autoAlpha: 1, duration: 1.2, ease: "power2.out", delay });
     },
     drop(el, delay) {
+      still(el);
       gsap.to(el, { autoAlpha: 1, duration: 0.8, ease: "power2.out", delay });
-      gsap.from(el, { y: "-=24", duration: 1.2, ease, delay, clearProps: "transform" });
+      gsap.from(el, { y: "-=24", duration: 1.2, ease, delay, clearProps: "transform,transition" });
     },
   };
 
