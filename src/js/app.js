@@ -105,11 +105,10 @@ function initReveals() {
       gsap.from(el, {
         scale: 0.6,
         y: "+=12",
-        transformOrigin: "0% 100%",
         duration: 0.9,
         ease: "back.out(2.2)",
         delay,
-        clearProps: "transform,transformOrigin,transition",
+        clearProps: "transform,transition",
       });
     },
     media(el, delay) {
