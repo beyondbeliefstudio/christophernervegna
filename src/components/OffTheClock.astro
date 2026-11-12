@@ -4,10 +4,19 @@
 // sticker carries its story in data-* attributes for the modal.
 // COMPONENTS
 import { Icon } from "astro-icon/components";
+import { getImage } from "astro:assets";
 import Heading from "@/components/Heading.astro";
 
 // DATA
 import { stickersData } from "@/data/stickersData";
+
+// Photos are optimized at build time; the modal swaps them in by URL.
+const stickers = await Promise.all(
+  stickersData.map(async s => ({
+    ...s,
+    photoSrc: s.photo ? (await getImage({ src: s.photo, width: 960, format: "webp" })).src : "",
+  }))
+);
 ---
 
 <section id="offclock" data-progress-nav-anchor aria-labelledby="offclock-title">
@@ -23,7 +32,7 @@ import { stickersData } from "@/data/stickersData";
           </Heading>
           <p>Drag them around. Click one and I&rsquo;ll tell you more.</p>
         </div>
-        {stickersData.map(s => (
+        {stickers.map(s => (
           <button
             class="sticker"
             type="button"
@@ -34,6 +43,9 @@ import { stickersData } from "@/data/stickersData";
             data-title={s.title}
             data-body={s.body}
             data-extra={s.extra}
+            data-photo={s.photoSrc || undefined}
+            data-photo-alt={s.photoAlt}
+            data-photo-pos={s.photoPos}
             aria-label={`${s.label}: tell me more`}
             style={`left: calc(${s.x}% - 66px); top: ${s.y}px; transform: rotate(${s.rot}deg);`}
           >
@@ -47,6 +59,7 @@ import { stickersData } from "@/data/stickersData";
   <dialog class="modal" data-modal aria-labelledby="sticker-title">
     <div class="modal__card" tabindex="-1" autofocus>
       <div class="modal__hero" data-modal-hero>
+        <img class="modal__photo" data-modal-photo alt="" hidden />
         <div class="modal__art" data-modal-art aria-hidden="true"></div>
         <button class="modal__close" type="button" data-close aria-label="Close">
           <Icon name="close" aria-hidden="true" />
@@ -233,7 +246,21 @@ import { stickersData } from "@/data/stickersData";
       }
     }
 
+    &__hero.has-photo {
+      height: 20rem;
+      overflow: hidden;
+    }
+
+    &__photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     &__art {
+      position: relative;
       width: 10rem;
       height: 10rem;
 
@@ -244,6 +271,15 @@ import { stickersData } from "@/data/stickersData";
         filter: drop-shadow(5px 0 0 #fff) drop-shadow(-5px 0 0 #fff) drop-shadow(0 5px 0 #fff)
           drop-shadow(0 -5px 0 #fff) drop-shadow(0 18px 22px rgba(20, 18, 16, 0.3));
       }
+    }
+
+    /* With a photo, the sticker shrinks and pins to the bottom-left corner. */
+    &__hero.has-photo .modal__art {
+      position: absolute;
+      bottom: 1rem;
+      left: 1.25rem;
+      width: 5.5rem;
+      height: 5.5rem;
     }
 
     &[open] .modal__art {

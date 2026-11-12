@@ -1,7 +1,14 @@
 // Off the clock stickers. Each one is an SVG in src/icons/ named "sticker-<id>".
 // x is % of the board width and y is px from the top of the board (desktop only;
 // phones get a loose two-column scatter in app.js). The modal reads kicker, title,
-// body and extra (an empty extra hides the grey note).
+// body and extra (an empty extra hides the grey note). A sticker with a photo
+// shows it as the popup's header, with the sticker pinned in its corner.
+import type { ImageMetadata } from "astro";
+import family from "@/assets/crew/family.jpg";
+import golf from "@/assets/crew/golf.jpg";
+import dog from "@/assets/crew/dog.jpg";
+import brisket from "@/assets/crew/brisket.jpg";
+
 export interface Sticker {
   id: string;
   label: string;
@@ -12,6 +19,10 @@ export interface Sticker {
   title: string;
   body: string;
   extra: string;
+  photo?: ImageMetadata;
+  photoAlt?: string;
+  /** CSS object-position, to keep the subject in frame. */
+  photoPos?: string;
 }
 
 export const stickersData: Sticker[] = [
@@ -36,6 +47,9 @@ export const stickersData: Sticker[] = [
     title: "Weekend rounds",
     body: "Golf is a family thing for us. My son is already out on the course with me.",
     extra: "Home course: Monroe Golf and Country Club. Last round: a 92, and I’ll take it.",
+    photo: golf,
+    photoAlt: "Chris mid-backswing on a tee box lined with pines",
+    photoPos: "50% 70%",
   },
   {
     id: "cocktail",
@@ -68,7 +82,10 @@ export const stickersData: Sticker[] = [
     kicker: "At home",
     title: "The new house",
     body: "We’re settling into a new place. Right now I’m turning the garage into a home office.",
-    extra: "",
+    extra: "The dog is head of backyard security.",
+    photo: dog,
+    photoAlt: "A brown dog in a plaid bandana lounging in the backyard grass",
+    photoPos: "50% 60%",
   },
   {
     id: "dad",
@@ -80,6 +97,9 @@ export const stickersData: Sticker[] = [
     title: "Dad of two",
     body: "A four-year-old who’s already swinging a golf club, and a one-year-old daughter who has everyone wrapped around her finger.",
     extra: "",
+    photo: family,
+    photoAlt: "Chris's wife and their two kids on the front porch steps",
+    photoPos: "50% 45%",
   },
   {
     id: "grill",
@@ -91,6 +111,9 @@ export const stickersData: Sticker[] = [
     title: "The smoker",
     body: "When I’m not cooking up websites, it’s brisket or burnt ends on my Weber Smoky Mountain.",
     extra: "",
+    photo: brisket,
+    photoAlt: "A gloved hand holding thick slices of smoked brisket",
+    photoPos: "50% 45%",
   },
   {
     id: "pin",

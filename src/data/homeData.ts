@@ -1,9 +1,3 @@
-// IMAGES (Crew)
-import family from "@/assets/crew/family.jpg";
-import golf from "@/assets/crew/golf.jpg";
-import dog from "@/assets/crew/dog.jpg";
-import brisket from "@/assets/crew/brisket.jpg";
-
 // Homepage content that renders as repeated blocks. Single paragraphs and
 // headlines stay in their section components; anything that maps to a list
 // lives here.
@@ -135,30 +129,6 @@ export const notesData = [
   {
     title: "At my own studio",
     text: "The whole cycle, from the first cold message to the pitch to teaching an owner to update their own site.",
-  },
-];
-
-// The crew back home (Crew.astro). Unsplash stand-ins until real photos land in src/assets/photos/.
-export const crewData = [
-  {
-    src: family,
-    alt: "Chris's wife and their two kids on the front porch steps",
-    caption: "My favorite people.",
-  },
-  {
-    src: golf,
-    alt: "Chris mid-backswing on a tee box lined with pines",
-    caption: "Early tee time. Always worth it.",
-  },
-  {
-    src: dog,
-    alt: "A brown dog in a plaid bandana lounging in the backyard grass",
-    caption: "Head of backyard security.",
-  },
-  {
-    src: brisket,
-    alt: "A gloved hand holding thick slices of smoked brisket",
-    caption: "Low and slow pays off.",
   },
 ];
 
