@@ -130,7 +130,7 @@ All of it respects `prefers-reduced-motion`.
 ## Content workflows
 
 - **New work example:** add an entry to `work.json` with `"image": ""`, then `npm run shots` (Playwright, 1440×1080). It saves `public/images/work/<id>.jpg` and fills in the path. `npm run shots -- --all` retakes everything. First run: `npx playwright install chromium`.
-- **Real photos:** drop them in `src/assets/photos/`, import in the component and pass to `Photo`. The Story photo is still an Unsplash stand-in (`About.astro`). Personal photos for the sticker popups live in `src/assets/crew/`.
+- **Real photos:** drop them in `src/assets/photos/`, import in the component and pass to `Photo`. Personal photos for the sticker popups live in `src/assets/crew/`.
 - **AI tool screenshots:** `src/assets/ai/` (1440×900, 16:10), mapped in `AI.astro`.
 - **Poll:** add `<Poll />` to a section to turn it back on.
 

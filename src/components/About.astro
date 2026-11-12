@@ -3,7 +3,6 @@
 // can be skimmed left to right.
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
-import Photo from "@/components/Photo.astro";
 import SecHead from "@/components/SecHead.astro";
 
 // DATA
@@ -12,24 +11,14 @@ import { chaptersData, perfectDayData } from "@/data/homeData";
 
 <section id="about" class="story bg-dark" data-progress-nav-anchor aria-labelledby="about-title">
   <div class="container container-md">
-    <div class="story__top">
-      <SecHead
-        id="about-title"
-        dark
-        red
-        bubble="How&rsquo;d you get here?"
-        title="Pixels first, then people."
-        sub="A design degree, a decade-plus of web design experience, and my own studio on the side."
-      />
-      <Photo
-        class="story__photo"
-        src="https://images.unsplash.com/photo-1545184180-25d471fe75eb?w=900&q=70&auto=format&fit=crop"
-        alt="Stand-in photo of someone working on a laptop"
-        label="Photo: you at work, mid-conversation"
-        caption="Probably explaining DNS to someone."
-        ratio="4 / 3.4"
-      />
-    </div>
+    <SecHead
+      id="about-title"
+      dark
+      red
+      bubble="How&rsquo;d you get here?"
+      title="Pixels first, then people."
+      sub="A design degree, a decade-plus of web design experience, and my own studio on the side."
+    />
 
     <ol class="story__chapters">
       {chaptersData.map(c => (
@@ -75,17 +64,6 @@ import { chaptersData, perfectDayData } from "@/data/homeData";
     padding: var(--_spacing---section-space--main) 0;
     border-radius: 3rem;
 
-    &__top {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 22.5rem;
-      align-items: end;
-      gap: 2.5rem;
-    }
-
-    :global(.story__photo) {
-      transform: rotate(3deg);
-    }
-
     &__chapters {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -122,16 +100,6 @@ import { chaptersData, perfectDayData } from "@/data/homeData";
       &__chapters {
         grid-template-columns: 1fr;
         row-gap: 3rem;
-      }
-    }
-
-    @media (max-width: 900px) {
-      &__top {
-        grid-template-columns: 1fr;
-      }
-
-      :global(.story__photo) {
-        max-width: 20rem;
       }
     }
 
