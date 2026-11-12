@@ -848,11 +848,30 @@ function initChat() {
     return `That one’s better asked directly. Email him at ${email}.`;
   };
 
+  // On phones the keyboard covers the bottom of the screen. Track the visible
+  // viewport so the panel (CSS vars --chat-vh and --chat-kb) sits above it.
+  const vv = window.visualViewport;
+  function fitViewport() {
+    const h = vv ? vv.height : window.innerHeight;
+    const kb = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0;
+    root.style.setProperty("--chat-vh", `${h}px`);
+    root.style.setProperty("--chat-kb", `${kb}px`);
+    root.classList.toggle("is--tight", h < 560);
+  }
+  fitViewport();
+  vv?.addEventListener("resize", fitViewport);
+  vv?.addEventListener("scroll", fitViewport);
+
+  // Don't pop the keyboard the moment the chat opens on a touch screen.
+  const touch = window.matchMedia("(pointer: coarse)").matches;
+
   function setOpen(open) {
     panel.hidden = !open;
+    root.classList.toggle("is--open", open);
     mainToggle.setAttribute("aria-expanded", String(open));
     label.textContent = open ? "Close" : "Ask about Chris";
-    if (open) input.focus();
+    if (open) (touch ? panel.querySelector(".chat__min") : input).focus();
+    else if (panel.contains(document.activeElement) || !document.activeElement) mainToggle.focus();
   }
 
   root

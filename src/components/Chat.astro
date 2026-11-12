@@ -81,20 +81,27 @@ const chips = [
 </div>
 
 <style lang="scss">
+  /* --chat-vh is the visible viewport height and --chat-kb the on-screen
+     keyboard's height, both kept current by initChat (visualViewport), so the
+     panel always fits above the keyboard on phones and tablets. */
   .chat {
+    --chat-edge: min(var(--site--margin), 1.5rem);
     position: fixed;
-    right: 1.25rem;
-    bottom: 1.25rem;
+    right: var(--chat-edge);
+    bottom: calc(var(--chat-edge) + var(--chat-kb, 0px));
     z-index: 60;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 0.75rem;
-    max-width: calc(100vw - 2.5rem);
+    max-width: calc(100vw - 2 * var(--chat-edge));
 
     &__panel {
+      display: flex;
+      flex-direction: column;
       width: 23.75rem;
       max-width: 100%;
+      max-height: calc(var(--chat-vh, 100dvh) - 9.5rem);
       overflow: hidden;
       border-radius: 1.5rem;
       background: var(--surface-primary);
@@ -105,6 +112,19 @@ const chips = [
       &[hidden] {
         display: none;
       }
+    }
+
+    &__head,
+    &__chips,
+    &__form {
+      flex: none;
+    }
+
+    /* Short screens (a phone with the keyboard up): drop the subtitle and the
+       suggestions so the conversation keeps the room. initChat sets is--tight. */
+    &.is--tight .chat__sub,
+    &.is--tight .chat__chips {
+      display: none;
     }
 
     &__head {
@@ -163,10 +183,12 @@ const chips = [
     }
 
     &__log {
+      flex: 1 1 auto;
+      min-height: 4rem;
       display: flex;
       flex-direction: column;
       gap: 0.625rem;
-      max-height: min(20rem, 45vh);
+      max-height: 20rem;
       padding: 1rem;
       overflow-y: auto;
       background: var(--light-050);
@@ -226,11 +248,12 @@ const chips = [
       padding: 0.75rem 1rem 1rem;
     }
 
+    /* 16px or more, or iOS zooms the whole page when the field gets focus. */
     &__input {
       flex: 1;
       min-width: 0;
       padding: 0.75rem 0.875rem;
-      font-size: 0.9375rem;
+      font-size: 1rem;
     }
 
     &__send {
@@ -281,6 +304,55 @@ const chips = [
       :global(svg) {
         width: 18px;
         height: 18px;
+      }
+    }
+
+    /* Phones: the open chat becomes a sheet with the page's side margins,
+       sitting on top of the keyboard; the toggle steps aside while it's open
+       (the header's minimize button closes it). */
+    @media (max-width: 600px) {
+      &.is--open {
+        left: var(--chat-edge);
+        bottom: calc(0.75rem + var(--chat-kb, 0px));
+        align-items: stretch;
+      }
+
+      &.is--open .chat__panel {
+        width: auto;
+        max-height: calc(var(--chat-vh, 100dvh) - 6.5rem);
+      }
+
+      &.is--open .chat__toggle {
+        display: none;
+      }
+
+      &__log {
+        max-height: none;
+      }
+
+      &__head {
+        padding: 0.75rem 0.875rem;
+      }
+
+      /* One swipeable row of suggestions instead of two wrapped rows. */
+      &__chips {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding: 0.75rem 0.875rem 0;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      &__chip {
+        flex: none;
+        white-space: nowrap;
+      }
+
+      &__form {
+        padding: 0.625rem 0.875rem 0.875rem;
       }
     }
 
