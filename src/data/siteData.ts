@@ -32,6 +32,8 @@ export const baseData = {
   },
   status:
     "Open to full-time roles in web design and development, web team leadership, and solutions engineering.",
+  workPrefs:
+    "Remote first, open to hybrid with a reasonable commute, and happy to travel. I can start right away.",
 };
 
 export const mailtoHref = `mailto:${baseData.email}`;

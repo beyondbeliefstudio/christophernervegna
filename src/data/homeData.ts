@@ -17,7 +17,7 @@ export const trioData = [
   {
     title: "I explain it",
     icon: "art-explain",
-    text: "And I&rsquo;m the one on the call. I scope what an owner really needs, walk them through how the thing works, and turn a developer&rsquo;s &ldquo;it depends&rdquo; into a decision a person can make.",
+    text: "And I&rsquo;m the one on the call. I scope what an owner really needs and turn a developer&rsquo;s &ldquo;it depends&rdquo; into a decision a person can make. At BentoBox I went from designing all day to running client calls, and found I love getting people excited about a platform.",
   },
 ];
 
@@ -120,11 +120,11 @@ export const aiProjectsData = [
 export const notesData = [
   {
     title: "On client calls",
-    text: "I scope what a client needs before anyone opens a design file. When an account is frustrated, I&rsquo;m usually the one who picks up the phone.",
+    text: "I explain things the way Oscar explained a surplus to Michael Scott: like you&rsquo;re five, with an everyday analogy that sticks. When an account is frustrated, I&rsquo;m usually the one who picks up the phone.",
   },
   {
     title: "Inside the team",
-    text: "Training designers, writing the docs, and reviewing work with specific notes on how to make it better.",
+    text: "When a designer&rsquo;s video wouldn&rsquo;t load right, I didn&rsquo;t just paste the fix. I walked them through why it broke and why the new code works. I&rsquo;d rather teach it once than fix it twice.",
   },
   {
     title: "At my own studio",

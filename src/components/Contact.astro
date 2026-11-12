@@ -31,6 +31,7 @@ import { baseData, mailtoHref } from "@/data/siteData";
         <i aria-hidden="true"></i>
         {baseData.status}
       </p>
+      <p class="contact__prefs">{baseData.workPrefs}</p>
       <div class="contact__actions">
         <Links variant="primary" href={baseData.resumes.web.href} target="_blank" rel="noopener">
           {baseData.resumes.web.label}
@@ -96,6 +97,14 @@ import { baseData, mailtoHref } from "@/data/siteData";
       color: color-mix(in srgb, var(--light-100) 78%, transparent);
       font-size: 1.0625rem;
       line-height: 1.6;
+    }
+
+    &__prefs {
+      margin-top: 0.25rem;
+      padding-left: 1.125rem;
+      color: color-mix(in srgb, var(--light-100) 60%, transparent);
+      font-size: 0.875rem;
+      line-height: 1.5;
     }
 
     &__status {

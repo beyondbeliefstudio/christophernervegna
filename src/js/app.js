@@ -578,7 +578,7 @@ function initStickers() {
         const col = i % 2;
         const row = Math.floor(i / 2);
         el.style.left = (col ? 58 : 4) + "%";
-        el.style.top = (row < 2 ? 16 + row * 112 : 600 + (row - 2) * 112) + "px";
+        el.style.top = (row < 3 ? 16 + row * 112 : 712 + (row - 3) * 112) + "px";
       } else {
         el.style.left = `calc(${el.dataset.x}% - 66px)`;
         el.style.top = el.dataset.y + "px";
