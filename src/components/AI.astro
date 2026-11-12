@@ -109,7 +109,6 @@ import { aiProjectsData } from "@/data/homeData";
       flex-direction: column;
       padding: 1.75rem 1.5rem 1.5rem;
       border-radius: var(--border-radius-large);
-      transition: transform 0.5s var(--ease-out);
 
       &:nth-child(1) {
         transform: rotate(-4deg) translateY(28px);
@@ -117,10 +116,6 @@ import { aiProjectsData } from "@/data/homeData";
 
       &:nth-child(3) {
         transform: rotate(4deg) translateY(28px);
-      }
-
-      &:hover {
-        transform: rotate(0) translateY(-6px);
       }
 
       &--ink {
@@ -180,13 +175,6 @@ import { aiProjectsData } from "@/data/homeData";
       grid-template-columns: 1fr;
 
       &__card:nth-child(n) {
-        transform: none;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      &__card:nth-child(n),
-      &__card:hover {
         transform: none;
       }
     }
