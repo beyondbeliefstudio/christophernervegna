@@ -135,23 +135,23 @@ export const notesData = [
 // Story (About.astro): "A perfect day", the strip under the chapters.
 export const perfectDayData = [
   {
+    time: "7:00 am",
+    title: "Check on everything",
+    text: "A lap around every site I look after: analytics, uptime, forms, and anything that needs a fix before the owner notices.",
+  },
+  {
     time: "9:00 am",
     title: "Discovery call",
-    text: "I listen to how the business actually runs and where the website is letting them down.",
+    text: "I listen to how the business actually runs and find where the website is letting them down, then turn it into a plan to bring in more business.",
   },
   {
     time: "10:30 am",
-    title: "Find the pain points",
-    text: "Not enough calls, a menu nobody can find, a site they can&rsquo;t update. I turn it into a plan to bring in more business.",
-  },
-  {
-    time: "1:00 pm",
     title: "Design and build",
-    text: "Mockup first, then the real thing in code, on their platform or by hand.",
+    text: "Heads down. Mockup first, then the real thing in code, on their platform or by hand.",
   },
   {
     time: "4:30 pm",
-    title: "Walk them through it",
-    text: "Show the owner what changed, why it works, and how to keep it up to date.",
+    title: "Launch walkthrough",
+    text: "A site that&rsquo;s ready goes live. I show the owner what changed, why it works, and how to keep it up to date.",
   },
 ];
