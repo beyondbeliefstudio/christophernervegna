@@ -125,12 +125,16 @@ const stickers = await Promise.all(
       padding: 1.5rem 0.75rem;
       border-radius: var(--border-radius-large);
 
+      /* Phones: the copy sits on top and the stickers fill a loose 3 x 3 grid
+         under it. app.js places them and sets the board height to fit. */
       &__board {
-        height: 59.5rem;
+        height: 40rem;
       }
 
       &__center {
-        top: 32.625rem;
+        top: 0.5rem;
+        width: 100%;
+        transform: translateX(-50%);
       }
     }
   }

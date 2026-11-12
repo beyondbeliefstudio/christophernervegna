@@ -648,16 +648,27 @@ function initStickers() {
   let z = 10;
   let drag = null;
 
+  // Phones: a loose 3-column grid under the copy. Small nudges keep it from
+  // reading as a rigid table; the middle column drops a touch.
+  const center = board.querySelector(".stickers__center");
+  const nudgeX = [-6, 4, 8, 6, -4, -8, -2, 6, 2];
+  const nudgeY = [0, 18, 4, 6, 22, 0, 2, 16, 8];
+
   function layout() {
     const narrow = board.clientWidth < 720;
+    const size = stickers[0]?.offsetWidth || 88;
+    const cell = board.clientWidth / 3;
+    const top0 = narrow ? center.offsetTop + center.offsetHeight + 28 : 0;
+    const rows = Math.ceil(stickers.length / 3);
+    board.style.height = narrow ? `${top0 + rows * (size + 18) + 24}px` : "";
     stickers.forEach((el, i) => {
       el.dataset.dx = "0";
       el.dataset.dy = "0";
       if (narrow) {
-        const col = i % 2;
-        const row = Math.floor(i / 2);
-        el.style.left = (col ? 58 : 4) + "%";
-        el.style.top = (row < 3 ? 16 + row * 112 : 712 + (row - 3) * 112) + "px";
+        const col = i % 3;
+        const row = Math.floor(i / 3);
+        el.style.left = `${col * cell + (cell - size) / 2 + (nudgeX[i] || 0)}px`;
+        el.style.top = `${top0 + row * (size + 18) + (nudgeY[i] || 0)}px`;
       } else {
         el.style.left = `calc(${el.dataset.x}% - 66px)`;
         el.style.top = el.dataset.y + "px";
@@ -667,6 +678,8 @@ function initStickers() {
   }
 
   layout();
+  // The copy's height depends on the web fonts; re-place once they're in.
+  document.fonts.ready.then(layout);
   let lastW = board.clientWidth;
   window.addEventListener("resize", () => {
     if (Math.abs(board.clientWidth - lastW) > 40) {
