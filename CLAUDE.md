@@ -50,8 +50,8 @@ Path aliases (tsconfig): `@/*` → `src/*`, `@/ui/*` → `src/components/ui/*`. 
 
 - `siteData.ts` exports `baseData` (name, title, description, email, location, LinkedIn, studio, resume links, status line) and `mailtoHref`. Never hardcode contact details.
 - `navData.ts` exports `navData` (the progress nav links, all `/#section`), `contactHref` and `legalNav`.
-- `homeData.ts` holds every repeated homepage block: `trioData`, `chaptersData`, `toolsData`, `aiRulesData`, `aiProjectsData`, `notesData`, `crewData`. One-off headlines and paragraphs stay in their components.
-- `stickersData.ts`: Off the clock stickers (position, rotation, modal copy). Each `id` has an SVG at `src/icons/sticker-<id>.svg`.
+- `homeData.ts` holds every repeated homepage block: `trioData`, `chaptersData`, `toolsData`, `aiProjectsData`, `notesData`, `perfectDayData`. One-off headlines and paragraphs stay in their components.
+- `stickersData.ts`: Off the clock stickers (position, rotation, modal copy, optional photo). Each `id` has an SVG at `src/icons/sticker-<id>.svg`. A sticker with `photo` (from `src/assets/crew/`) shows it as a small polaroid beside the sticker in the popup.
 - `work.json` → the `work` content collection (`content.config.ts`). The order in the file is the order on the page. `where` must be `BentoBox` or `Beyond Belief` (a new value needs a schema change and a filter chip in `Work.astro`).
 - `facts.json`: grounding for the chat function. `polls.json`: poll questions (the poll is built but not on the page).
 
@@ -84,7 +84,7 @@ Every page passes a unique `pageTitle` (`Page | Chris Nervegna`) and `descriptio
 | `Chat.astro` / `Poll.astro` | Markup + scoped styles only; behavior in `app.js`. |
 | `Analytics`, `AhrefsAnalytics`, `UserBack` | Env-driven, skip in dev. |
 
-Homepage order (`pages/index.astro`): Hero → OpenToWork → ThreeInOne → Work → About (Story) → Build → AI → WorkingWithMe → Crew → OffTheClock → MessageForm → Contact.
+Homepage order (`pages/index.astro`): Hero → OpenToWork → ThreeInOne → Work → About (Story) → Build → AI → WorkingWithMe → OffTheClock → MessageForm → Contact.
 
 ---
 
@@ -130,8 +130,8 @@ All of it respects `prefers-reduced-motion`.
 ## Content workflows
 
 - **New work example:** add an entry to `work.json` with `"image": ""`, then `npm run shots` (Playwright, 1440×1080). It saves `public/images/work/<id>.jpg` and fills in the path. `npm run shots -- --all` retakes everything. First run: `npx playwright install chromium`.
-- **Real photos:** drop them in `src/assets/photos/`, import in the component and pass to `Photo`. The Story photo and the four Crew photos are still Unsplash stand-ins (`About.astro`, `homeData.ts`).
-- **AI tool screenshots:** replace the placeholders in `AI.astro` (16:10).
+- **Real photos:** drop them in `src/assets/photos/`, import in the component and pass to `Photo`. The Story photo is still an Unsplash stand-in (`About.astro`). Personal photos for the sticker popups live in `src/assets/crew/`.
+- **AI tool screenshots:** `src/assets/ai/` (1440×900, 16:10), mapped in `AI.astro`.
 - **Poll:** add `<Poll />` to a section to turn it back on.
 
 ---

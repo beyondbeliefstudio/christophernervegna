@@ -481,6 +481,7 @@ function initStickers() {
   const tones = ["red", "ink", "crema", "blush"];
   const hero = modal.querySelector("[data-modal-hero]");
   const art = modal.querySelector("[data-modal-art]");
+  const snap = modal.querySelector("[data-modal-snap]");
   const photo = modal.querySelector("[data-modal-photo]");
 
   function open(el) {
@@ -489,17 +490,15 @@ function initStickers() {
     hero.dataset.tone = tones[index % tones.length];
     art.style.setProperty("--art-rot", (index % 2 ? 6 : -6) + "deg");
     art.replaceChildren(el.querySelector("svg").cloneNode(true));
-    // Stickers with a photo show it as the header, with the sticker in the corner.
+    // Stickers with a photo add a small polaroid beside the sticker art.
     const src = el.dataset.photo || "";
     hero.classList.toggle("has-photo", !!src);
-    photo.hidden = !src;
+    snap.hidden = !src;
     if (src) {
       photo.src = src;
       photo.alt = el.dataset.photoAlt || "";
       photo.style.objectPosition = el.dataset.photoPos || "50% 50%";
-    } else {
-      photo.removeAttribute("src");
-      photo.alt = "";
+      snap.style.setProperty("--snap-rot", (index % 2 ? -5 : 5) + "deg");
     }
     modal.querySelectorAll("[data-f]").forEach(field => {
       const value = el.dataset[field.dataset.f] || "";
