@@ -56,7 +56,7 @@ export const chaptersData = [
       "Design and build custom sites for restaurants and hospitality groups, dozens in flight at once",
       "Lead design calls directly with owners and marketing teams",
       "Set the front-end standards and custom CSS and JavaScript the design team builds with",
-      "Own the VIP and at-risk accounts, and haven&rsquo;t lost one in two years",
+      "Own the VIP and at-risk accounts, and get on the call when a client is ready to walk",
       "Mentor a team of designers, run design reviews, and wrote the team&rsquo;s training docs",
     ],
     current: true,

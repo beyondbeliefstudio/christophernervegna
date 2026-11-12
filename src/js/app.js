@@ -708,7 +708,7 @@ function initChat() {
     ],
     [
       /lead|led|team|mentor|manag/i,
-      "He mentors four designers at BentoBox, runs design reviews, and set the front-end standards the team builds to. He also owns the VIP and at-risk accounts, and hasn’t lost one in two years.",
+      "He mentors four designers at BentoBox, runs design reviews, and set the front-end standards the team builds to. He also owns the VIP and at-risk accounts, and he’s the one on the call when a client is unhappy.",
     ],
     [
       /demo|sales|solutions|pitch|present|client|customer/i,
