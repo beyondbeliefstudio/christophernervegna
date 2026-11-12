@@ -59,10 +59,8 @@ const stickers = await Promise.all(
   <dialog class="modal" data-modal aria-labelledby="sticker-title">
     <div class="modal__card" tabindex="-1" autofocus>
       <div class="modal__hero" data-modal-hero>
+        <img class="modal__photo" data-modal-photo alt="" hidden />
         <div class="modal__art" data-modal-art aria-hidden="true"></div>
-        <figure class="modal__snap" data-modal-snap hidden>
-          <img data-modal-photo alt="" />
-        </figure>
         <button class="modal__close" type="button" data-close aria-label="Close">
           <Icon name="close" aria-hidden="true" />
         </button>
@@ -262,41 +260,51 @@ const stickers = await Promise.all(
       }
     }
 
-    /* A sticker with a photo keeps the same header: the sticker sits beside a
-       small polaroid snapshot, both tilted, both a little smaller. */
+    /* With a photo, the photo fills the header and the sticker drops to the
+       bottom-right corner, half over the photo and half over the card. */
     &__hero.has-photo {
-      gap: clamp(1rem, 5vw, 2.5rem);
-      align-items: flex-end;
-      height: 15rem;
-      padding: 0 3.5rem 1.5rem 0.5rem; /* nudges the pair left, clear of the close button */
+      height: clamp(16rem, 60vw, 21rem);
+      background: var(--dark-900);
 
       .modal__art {
-        width: clamp(6.5rem, 22vw, 8.5rem);
-        height: clamp(6.5rem, 22vw, 8.5rem);
-        margin-bottom: 1.25rem;
+        position: absolute;
+        right: 1.5rem;
+        bottom: -2.75rem;
+        z-index: 2;
+        width: 6.5rem;
+        height: 6.5rem;
       }
     }
 
-    &__snap {
-      width: clamp(7rem, 24vw, 9rem);
-      margin: 0;
-      padding: 0.375rem 0.375rem 1.375rem;
-      border-radius: var(--border-radius-small);
-      background: #fff;
-      box-shadow: var(--shadow-polaroid);
-      transform: rotate(var(--snap-rot, 5deg));
-
-      img {
-        display: block;
-        width: 100%;
-        aspect-ratio: 4 / 5;
-        object-fit: cover;
-        border-radius: 2px;
-      }
+    &__photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    &[open] .modal__snap {
-      animation: snap-in 0.6s 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    &__photo[hidden] {
+      display: none;
+    }
+
+    /* Keep the title clear of the sticker that overlaps the content. */
+    &__card.has-photo .modal__title {
+      padding-right: 6.5rem;
+    }
+
+    /* Phones: a smaller sticker, and the title drops below it instead of squeezing. */
+    @media (max-width: 480px) {
+      &__hero.has-photo .modal__art {
+        bottom: -2rem;
+        width: 4.75rem;
+        height: 4.75rem;
+      }
+
+      &__card.has-photo .modal__title {
+        margin-top: 2.75rem;
+        padding-right: 0;
+      }
     }
 
     &[open] .modal__art {
@@ -365,8 +373,7 @@ const stickers = await Promise.all(
 
     @media (prefers-reduced-motion: reduce) {
       &[open] .modal__card,
-      &[open] .modal__art,
-      &[open] .modal__snap {
+      &[open] .modal__art {
         animation: none;
       }
     }
@@ -380,17 +387,6 @@ const stickers = await Promise.all(
     to {
       opacity: 1;
       transform: rotate(var(--art-rot, -6deg));
-    }
-  }
-
-  @keyframes snap-in {
-    from {
-      opacity: 0;
-      transform: translateY(30px) rotate(18deg) scale(0.7);
-    }
-    to {
-      opacity: 1;
-      transform: rotate(var(--snap-rot, 5deg));
     }
   }
 

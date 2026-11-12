@@ -51,7 +51,7 @@ Path aliases (tsconfig): `@/*` → `src/*`, `@/ui/*` → `src/components/ui/*`. 
 - `siteData.ts` exports `baseData` (name, title, description, email, location, LinkedIn, studio, resume links, status line) and `mailtoHref`. Never hardcode contact details.
 - `navData.ts` exports `navData` (the progress nav links, all `/#section`), `contactHref` and `legalNav`.
 - `homeData.ts` holds every repeated homepage block: `trioData`, `chaptersData`, `toolsData`, `aiProjectsData`, `notesData`, `perfectDayData`. One-off headlines and paragraphs stay in their components.
-- `stickersData.ts`: Off the clock stickers (position, rotation, modal copy, optional photo). Each `id` has an SVG at `src/icons/sticker-<id>.svg`. A sticker with `photo` (from `src/assets/crew/`) shows it as a small polaroid beside the sticker in the popup.
+- `stickersData.ts`: Off the clock stickers (position, rotation, modal copy, optional photo). Each `id` has an SVG at `src/icons/sticker-<id>.svg`. A sticker with `photo` (from `src/assets/crew/`) fills the popup header with it, and the sticker moves to the corner.
 - `work.json` → the `work` content collection (`content.config.ts`). The order in the file is the order on the page. `where` must be `BentoBox` or `Beyond Belief` (a new value needs a schema change and a filter chip in `Work.astro`).
 - `facts.json`: grounding for the chat function. `polls.json`: poll questions (the poll is built but not on the page).
 

@@ -2,7 +2,7 @@
 // x is % of the board width and y is px from the top of the board (desktop only;
 // phones get a loose two-column scatter in app.js). The modal reads kicker, title,
 // body and extra (an empty extra hides the grey note). A sticker with a photo
-// adds a small polaroid beside the sticker in the popup's header.
+// fills the popup's header, and the sticker moves to its bottom-right corner.
 import type { ImageMetadata } from "astro";
 import family from "@/assets/crew/family.jpg";
 import golf from "@/assets/crew/golf.jpg";
